@@ -8,7 +8,7 @@ public class MySQLConnection extends DatabaseFactory
 {
 
     private String driver = "com.mysql.jdbc.Driver";
-    private String url = "jdbc:mysql://localhost:3307/Classroom";
+    private String url = "jdbc:mysql://localhost:3306/quest";
     private String username;
     private String password;
     
