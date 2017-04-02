@@ -39,7 +39,7 @@ public class MainMenu extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
