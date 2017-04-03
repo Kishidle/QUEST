@@ -21,9 +21,7 @@ public class ResultMenu {
 
 	private JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -37,32 +35,31 @@ public class ResultMenu {
 		});
 	}
 
+	
 	/**
-	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public ResultMenu(User user, Test test, Answer answer) {
 		initialize(user, test, answer);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+
 	@SuppressWarnings("null")
 	public void initialize(User user, Test test, Answer answer) {
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 484);
+		frame.setBounds(100, 100, 450, 554);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle(test.getTitle());
 		frame.setVisible(true);
 
-		JLabel lblDescription = new JLabel("Description: " + test.getDescription());
-		lblDescription.setBounds(10, 11, 64, 14);
+		JLabel lblDescription = new JLabel("Description: ");
+		lblDescription.setBounds(10, 11, 126, 14);
 		frame.getContentPane().add(lblDescription);
 
 		JLabel lblVerdict = new JLabel("Verdict");
-		lblVerdict.setBounds(10, 257, 46, 14);
+		lblVerdict.setBounds(10, 309, 46, 14);
 		frame.getContentPane().add(lblVerdict);
 
 		JButton btnConfirm = new JButton("Confirm");
@@ -83,11 +80,11 @@ public class ResultMenu {
 				});
 			}
 		});
-		btnConfirm.setBounds(335, 411, 89, 23);
+		btnConfirm.setBounds(335, 481, 89, 23);
 		frame.getContentPane().add(btnConfirm);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 89, 414, 157);
+		scrollPane.setBounds(10, 141, 414, 157);
 		frame.getContentPane().add(scrollPane);
 
 		JTextArea txtrCodeArea = new JTextArea();
@@ -95,8 +92,16 @@ public class ResultMenu {
 		scrollPane.setViewportView(txtrCodeArea);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 280, 414, 120);
+		scrollPane_1.setBounds(10, 334, 414, 120);
 		frame.getContentPane().add(scrollPane_1);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 36, 414, 94);
+		frame.getContentPane().add(scrollPane_2);
+		
+		JTextArea txtrDescriptionArea = new JTextArea();
+		txtrDescriptionArea.setText("description area");
+		scrollPane_2.setViewportView(txtrDescriptionArea);
 
 		if (answer.getAnswer() == test.getAnswer()) {
 			JTextArea txtrVerdictArea = new JTextArea();
