@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
 import model.Answer;
@@ -70,7 +71,7 @@ public class ResultMenu {
 						try {
 							//moving windows
 							MainMenu mm = new MainMenu(user);
-							mm.initialize(user);
+							mm.setVisible(true);
 							frame.dispose();
 						} 
 						catch (Exception e) {
@@ -89,6 +90,7 @@ public class ResultMenu {
 
 		JTextArea txtrCodeArea = new JTextArea();
 		txtrCodeArea.setText(test.getFullAnswer());
+		txtrCodeArea.setEditable(false);
 		scrollPane.setViewportView(txtrCodeArea);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -103,15 +105,23 @@ public class ResultMenu {
 		txtrDescriptionArea.setText("description area");
 		scrollPane_2.setViewportView(txtrDescriptionArea);
 
-		if (answer.getAnswer() == test.getAnswer()) {
+		if (answer.getAnswer().equals(test.getAnswer())) {
 			JTextArea txtrVerdictArea = new JTextArea();
 			txtrVerdictArea.setText(test.getCorrect());
+			txtrVerdictArea.setLineWrap(true);
+			txtrVerdictArea.setWrapStyleWord(true);
+			txtrVerdictArea.setEditable(false);
 			scrollPane_1.setViewportView(txtrVerdictArea);
 		}
 		else {
 			JTextArea txtrVerdictArea = new JTextArea();
 			txtrVerdictArea.setText(test.getIncorrect());
+			txtrVerdictArea.setLineWrap(true);
+			txtrVerdictArea.setWrapStyleWord(true);
+			txtrVerdictArea.setEditable(false);
 			scrollPane_1.setViewportView(txtrVerdictArea);
 		}
+		
+		JOptionPane.showMessageDialog(null, test.getCorrect() + " " + test.getIncorrect());
 	}
 }

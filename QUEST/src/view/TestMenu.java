@@ -66,7 +66,6 @@ public class TestMenu {
 		String des = "";
 		String cod = "";
 		Test test = new Test();
-		JOptionPane.showMessageDialog(null, "test");
 				
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 441);
@@ -134,6 +133,7 @@ public class TestMenu {
 		
 		JTextArea txtrCodeArea = new JTextArea();
 		txtrCodeArea.setText(cod);
+		txtrCodeArea.setEditable(false);
 		scrollPane.setViewportView(txtrCodeArea);
 		
 		JLabel lblAnswer = new JLabel("Answer: ");
@@ -156,7 +156,7 @@ public class TestMenu {
 							Answer man = new Answer(textField.getText());
 							//moving windows
 							ResultMenu rm = new ResultMenu(user, ptest, man);
-							rm.initialize(user, ptest, man);
+							//rm.initialize(user, ptest, man);
 							frame.dispose();
 						} 
 						catch (Exception e) {
