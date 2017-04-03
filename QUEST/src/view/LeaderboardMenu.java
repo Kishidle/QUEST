@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
@@ -51,16 +53,18 @@ public class LeaderboardMenu {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(User user) {
+		int bottom = 0;
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
 		JLabel lblLeaderboards = new JLabel("Leaderboards");
-		lblLeaderboards.setBounds(184, 11, 78, 14);
+		lblLeaderboards.setBounds(184, 15, 78, 14);
 		panel.add(lblLeaderboards);
 		
 		table = new JTable();
@@ -98,8 +102,8 @@ public class LeaderboardMenu {
 				stmt = (Statement) conn.createStatement();
 
 				String query = "SELECT * FROM users " +
-						"WHERE U_Pts <= (SELECT U_Pts FROM users WHERE U_Usn ='" + user.getUsername() + "') AND U_Usn != '" + user.getUsername() + "'" +
-						"ORDER BY U_Pts ASC" +
+						"WHERE U_Pts <= (SELECT U_Pts FROM users WHERE U_Usn ='" + user.getUsername() + "') AND U_Usn != '" + user.getUsername() + "' " +
+						"ORDER BY U_Pts ASC " +
 						"LIMIT 2";
 
 				ResultSet rs = stmt.executeQuery(query);
@@ -107,38 +111,95 @@ public class LeaderboardMenu {
 				if (rs.next()) {
 					int rows = rs.getInt(1); 
 					String u1 = rs.getString("U_Usn");
-					table.getModel().setValueAt(u1, 0, 0);
+					table.getModel().setValueAt(u1, 3, 0);
+					bottom++;
 					if (rs.next()) {
 						String u2 = rs.getString("U_Usn");
-						table.getModel().setValueAt(u2, 1, 0);
+						table.getModel().setValueAt(u2, 4, 0);
+						bottom++;
 					}
 				} 
 			} 
 			catch(Exception a) {
 				System.out.println(a.getMessage());	    	
 				JOptionPane.showMessageDialog(null, "A database error has occured.");
-			}		
-			table.getModel().setValueAt(user.getUsername(), 2, 0);
+			}
+			if (bottom == 2) {
+				table.getModel().setValueAt(user.getUsername(), 2, 0);
+			}
+			else if (bottom == 1) {
+				table.getModel().setValueAt(user.getUsername(), 3, 0);
+			}
+			else {
+				table.getModel().setValueAt(user.getUsername(), 4, 0);
+			}
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
 				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
 				stmt = (Statement) conn.createStatement();
-
-				String query = "SELECT * FROM users " +
-						"WHERE U_Pts >= (SELECT U_Pts FROM users WHERE U_Usn ='" + user.getUsername() + "') AND U_Usn != '" + user.getUsername() + "'" +
-						"ORDER BY U_Pts ASC" +
-						"LIMIT 2";
-
+				
+				String query;
+				
+				if (bottom == 2) {
+					query = "SELECT * FROM users " +
+							"WHERE U_Pts >= (SELECT U_Pts FROM users WHERE U_Usn ='" + user.getUsername() + "') AND U_Usn != '" + user.getUsername() + "' " +
+							"ORDER BY U_Pts ASC " +
+							"LIMIT 2";
+				}
+				else if (bottom == 1) {
+					query = "SELECT * FROM users " +
+							"WHERE U_Pts >= (SELECT U_Pts FROM users WHERE U_Usn ='" + user.getUsername() + "') AND U_Usn != '" + user.getUsername() + "' " +
+							"ORDER BY U_Pts ASC " +
+							"LIMIT 3";
+				}
+				else {
+					query = "SELECT * FROM users " +
+							"WHERE U_Pts >= (SELECT U_Pts FROM users WHERE U_Usn ='" + user.getUsername() + "') AND U_Usn != '" + user.getUsername() + "' " +
+							"ORDER BY U_Pts ASC " +
+							"LIMIT 4";
+				}
 				ResultSet rs = stmt.executeQuery(query);
 				
 				if (rs.next()) {
-					int rows = rs.getInt(1); 
-					String u3 = rs.getString("U_Usn");
-					table.getModel().setValueAt(u3, 3, 0);
-					if (rs.next()) {
-						String u4 = rs.getString("U_Usn");
-						table.getModel().setValueAt(u4, 4, 0);
+					if (bottom == 2) {
+						int rows = rs.getInt(1); 
+						String u3 = rs.getString("U_Usn");
+						table.getModel().setValueAt(u3, 1, 0);
+						if (rs.next()) {
+							String u4 = rs.getString("U_Usn");
+							table.getModel().setValueAt(u4, 0, 0);
+						}
+					}
+					else if (bottom == 1) {
+						int rows = rs.getInt(1); 
+						String u3 = rs.getString("U_Usn");
+						table.getModel().setValueAt(u3, 2, 0);
+						if (rs.next()) {
+							String u4 = rs.getString("U_Usn");
+							table.getModel().setValueAt(u4, 1, 0);
+							if (rs.next()) {
+								String u5 = rs.getString("U_Usn");
+								table.getModel().setValueAt(u5, 0, 0);
+							}
+						}
+					}
+					else {
+						int rows = rs.getInt(1); 
+						String u3 = rs.getString("U_Usn");
+						table.getModel().setValueAt(u3, 3, 0);
+						if (rs.next()) {
+							String u4 = rs.getString("U_Usn");
+							table.getModel().setValueAt(u4, 2, 0);
+							if (rs.next()) {
+								String u5 = rs.getString("U_Usn");
+								table.getModel().setValueAt(u5, 1, 0);
+								if (rs.next()) {
+									String u6 = rs.getString("U_Usn");
+									table.getModel().setValueAt(u6, 0, 0);
+								}
+							}
+						}
 					}
 				} 
 			} 
@@ -154,6 +215,23 @@ public class LeaderboardMenu {
 		panel.add(table);
 		
 		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							//moving windows
+							MainMenu mm = new MainMenu(user);
+							mm.setVisible(true);
+							frame.dispose();
+						} 
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 		btnConfirm.setBounds(335, 227, 89, 23);
 		panel.add(btnConfirm);
 	}
