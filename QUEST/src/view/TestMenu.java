@@ -29,9 +29,7 @@ public class TestMenu {
 	private JFrame frame;
 	private JTextField textField;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,15 +43,23 @@ public class TestMenu {
 		});
 	}
 
+	
 	/**
-	 * Create the application.
+	 * @wbp.parser.entryPoint
+	 * 
+	 * 
 	 */
+
+	
+	
 	public TestMenu(User user) {
 		initialize(user);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * 
+	 * 
 	 */
 	public void initialize(User user) {
 		String ttl = "";
@@ -63,7 +69,7 @@ public class TestMenu {
 		JOptionPane.showMessageDialog(null, "test");
 				
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 385);
+		frame.setBounds(100, 100, 450, 441);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		try {
@@ -73,7 +79,7 @@ public class TestMenu {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
-				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "password");	
 				stmt = (Statement) conn.createStatement();
 
 				String query = "SELECT * FROM tests " +
@@ -123,7 +129,7 @@ public class TestMenu {
 		panel.add(lblDescription);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 69, 414, 168);
+		scrollPane.setBounds(10, 115, 414, 168);
 		panel.add(scrollPane);
 		
 		JTextArea txtrCodeArea = new JTextArea();
@@ -131,11 +137,11 @@ public class TestMenu {
 		scrollPane.setViewportView(txtrCodeArea);
 		
 		JLabel lblAnswer = new JLabel("Answer: ");
-		lblAnswer.setBounds(10, 251, 46, 14);
+		lblAnswer.setBounds(10, 309, 67, 14);
 		panel.add(lblAnswer);
 		
 		textField = new JTextField();
-		textField.setBounds(55, 248, 369, 20);
+		textField.setBounds(87, 306, 337, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -160,7 +166,15 @@ public class TestMenu {
 				});
 			}
 		});
-		btnSubmit.setBounds(335, 312, 89, 23);
+		btnSubmit.setBounds(335, 368, 89, 23);
 		panel.add(btnSubmit);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 49, 414, 59);
+		panel.add(scrollPane_1);
+		
+		JTextArea txtrDescriptionArea = new JTextArea();
+		txtrDescriptionArea.setText("description area");
+		scrollPane_1.setViewportView(txtrDescriptionArea);
 	}
 }

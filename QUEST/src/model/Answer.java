@@ -2,7 +2,7 @@ package model;
 
 import java.io.IOException;
 
-import service.ClientService;
+
 
 /**
  * Handles the encapsulation and representation of <code>Answer</code> model.
