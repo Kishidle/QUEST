@@ -55,7 +55,7 @@ public class MainMenu extends JFrame {
 		setTitle("Main Menu");
 		//JOptionPane.showMessageDialog(null, u + " " + p + " " + ac + " " + pt);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 300, 400);
+		setBounds(100, 100, 417, 445);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -105,38 +105,57 @@ public class MainMenu extends JFrame {
 		
 		JLabel lMessage = new JLabel("What is your quest for today?");
 		lMessage.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JButton bBadge = new JButton("Badges");
+		bBadge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					BadgeMenuTest badgeFrame = new BadgeMenuTest(user);
+					dispose();
+				}
+				catch(Exception x){
+					x.printStackTrace();
+				}
+			}
+		});
+		bBadge.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(bProfile, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(bQuests, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(bRandomTest, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(bLeaderboards, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(lMessage, GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
-					.addContainerGap())
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+									.addComponent(bProfile, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(bQuests, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(bRandomTest, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lMessage, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(bLeaderboards, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(bBadge, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+							.addGap(66))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(28)
 					.addComponent(lMessage)
-					.addPreferredGap(ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+					.addGap(26)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(bProfile, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bQuests, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+						.addComponent(bQuests, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+						.addComponent(bRandomTest, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(bRandomTest, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bLeaderboards, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(bLeaderboards, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+						.addComponent(bBadge, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE))
+					.addGap(156))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

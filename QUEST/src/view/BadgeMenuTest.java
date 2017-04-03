@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JScrollPane;
+
+import model.User;
+
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
@@ -18,6 +21,8 @@ import java.awt.event.ActionEvent;
 public class BadgeMenuTest {
 
 	private JFrame frame;
+	private User user;
+	
 
 	/**
 	 * Launch the application.
@@ -26,8 +31,8 @@ public class BadgeMenuTest {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BadgeMenuTest window = new BadgeMenuTest();
-					window.frame.setVisible(true);
+					//BadgeMenuTest window = new BadgeMenuTest(user);
+					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,8 +42,10 @@ public class BadgeMenuTest {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
-	public BadgeMenuTest() {
+	public BadgeMenuTest(User user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -47,8 +54,9 @@ public class BadgeMenuTest {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 453, 385);
+		frame.setBounds(100, 100, 496, 362);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
@@ -59,7 +67,7 @@ public class BadgeMenuTest {
 		panel.add(lblBadges);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 36, 417, 181);
+		panel_1.setBounds(10, 36, 460, 244);
 		panel.add(panel_1);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
@@ -259,7 +267,7 @@ public class BadgeMenuTest {
 		panel_1.add(btnBadge_25, gbc_btnBadge_25);
 		
 		JButton btnConfirm = new JButton("Confirm");
-		btnConfirm.setBounds(338, 312, 89, 23);
+		btnConfirm.setBounds(381, 291, 89, 23);
 		panel.add(btnConfirm);
 	}
 }
