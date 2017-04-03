@@ -28,7 +28,7 @@ public class TestMenu {
 
 	private JFrame frame;
 	private JTextField textField;
-
+	public String des;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -63,7 +63,7 @@ public class TestMenu {
 	 */
 	public void initialize(User user) {
 		String ttl = "";
-		String des = "";
+		
 		String cod = "";
 		Test test = new Test();
 				
@@ -123,8 +123,8 @@ public class TestMenu {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel lblDescription = new JLabel("Description: " + des);
-		lblDescription.setBounds(10, 24, 67, 14);
+		JLabel lblDescription = new JLabel("Description: ");
+		lblDescription.setBounds(10, 24, 89, 14);
 		panel.add(lblDescription);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -155,7 +155,7 @@ public class TestMenu {
 						try {
 							Answer man = new Answer(textField.getText());
 							//moving windows
-							ResultMenu rm = new ResultMenu(user, ptest, man);
+							ResultMenu rm = new ResultMenu(user, ptest, man, des);
 							//rm.initialize(user, ptest, man);
 							frame.dispose();
 						} 
@@ -174,7 +174,7 @@ public class TestMenu {
 		panel.add(scrollPane_1);
 		
 		JTextArea txtrDescriptionArea = new JTextArea();
-		txtrDescriptionArea.setText("description area");
+		txtrDescriptionArea.setText(des);
 		scrollPane_1.setViewportView(txtrDescriptionArea);
 	}
 }

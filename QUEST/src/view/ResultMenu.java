@@ -40,13 +40,13 @@ public class ResultMenu {
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public ResultMenu(User user, Test test, Answer answer) {
-		initialize(user, test, answer);
+	public ResultMenu(User user, Test test, Answer answer, String des) {
+		initialize(user, test, answer, des);
 	}
 
 
 	@SuppressWarnings("null")
-	public void initialize(User user, Test test, Answer answer) {
+	public void initialize(User user, Test test, Answer answer, String des) {
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 554);
@@ -102,7 +102,7 @@ public class ResultMenu {
 		frame.getContentPane().add(scrollPane_2);
 		
 		JTextArea txtrDescriptionArea = new JTextArea();
-		txtrDescriptionArea.setText("description area");
+		txtrDescriptionArea.setText(des);
 		scrollPane_2.setViewportView(txtrDescriptionArea);
 
 		if (answer.getAnswer().equals(test.getAnswer())) {
