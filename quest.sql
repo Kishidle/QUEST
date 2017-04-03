@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2017 at 05:34 AM
+-- Generation Time: Apr 03, 2017 at 05:25 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.6
 
@@ -117,7 +117,11 @@ CREATE TABLE `tests` (
   `T_Ttl` varchar(64) NOT NULL,
   `T_Msg` text NOT NULL,
   `T_Cod` text NOT NULL,
+  `T_Ans` text NOT NULL,
+  `T_Fan` text NOT NULL,
   `T_Pts` int(11) NOT NULL DEFAULT '50',
+  `T_Cor` text NOT NULL,
+  `T_Inc` text NOT NULL,
   `A_Num` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -125,29 +129,49 @@ CREATE TABLE `tests` (
 -- Dumping data for table `tests`
 --
 
-INSERT INTO `tests` (`T_Num`, `T_Ttl`, `T_Msg`, `T_Cod`, `T_Pts`, `A_Num`) VALUES
-(1, 'Variable Declaration (Integer)', 'Create an integer variable named "number" that outputs 14 when 5 is added.', 'int main ()\n{\n  /** insert here **/\n  number = number + 5;\n  printf("%d", number);\n}', 50, 1),
-(2, 'Variable Declaration (Character)', 'Create a character variable named "answer" that will store the character ''y'' when inputted.', 'int main () \n{\n  /** insert here **/\n  scanf("%c", &answer);\n  printf("Your answer is: %c", answer);\n}\n', 50, 2),
-(3, 'Variable Declaration (Float)', 'Create a float variable named "gpa" that will store the output of the program.', 'int main () \n{\n  /** insert here **/\n  printf("Your grades for each subject this term: 4.0, 3.5, 3.0, 2.5, 3.5");\n  gpa = 4.0 + 3.5 + 3.0 + 2.5 + 3.5;\n  gpa = gpa / 5;\n}\n', 50, 3),
-(4, 'Arrays', 'Make a 10 element array named “numbers” to contain 10 integers.', 'int main () \n{\n  /** insert here **/\n  int i = 0; \n  for (i = 0; i < 10; i++) \n  {\n    Numbers[i] = i;\n  }\n}\n', 50, 4),
-(5, 'Input statements', 'Make an input statement that obtains a number for printing.', 'int main () \n{\n  int i = 0; \n  /** insert here **/\n  printf(“%d”, i);\n}\n', 50, 5),
-(6, 'Output statements', 'Make an output statement that prints i.', 'int main () \n{\n  int i = 0; \n  scanf(“%d”, &i);\n  /** insert here **/\n}\n', 50, 6),
-(7, 'Else Statements', 'Fill in the else statement to be able to let the word “no” print.', 'int main () \n{\n  char i = ‘y’;\n  if (i == ‘n’) \n  {\n    printf("%c", i);\n  }\n  /** insert here **/\n  {\n    printf("no");\n  }\n}\n', 50, 7),
-(8, 'Switch Statements', 'Fill in the switch statement to be able to let the word “no” print.', 'int main () \n{\n  char i = ‘y’;\n  switch ( /** insert here **/ ) \n  {\n    case ‘y’: \n      printf("%c", i); \n      break;\n    case ‘n’:\n      printf(“no”);\n      break;\n  }\n}\n', 50, 8),
-(9, 'For Loops', 'Description: Fill in the for loop properly to be able to output numbers from 0 - 10.', 'int main () \n{\n  int i = 0;\n  for ( /** insert here **/ ; /** insert here **/ ; /** insert here **/ ) \n  {\n    printf("%d \\n", i);\n  }\n}\n', 50, 9),
-(10, 'While Loops', 'Fill in the while loop to be able to output numbers from 10 - 20.', 'int main () \n{\n  int i = 10;\n  while ( /** insert here **/ ) \n  {	 \n    printf("%d \\n", i);\n  }\n}\n', 50, 10),
-(11, 'Semi-colons', 'Find the missing semicolon.', 'int main () \n{\n  float pburger = 10;\n  float pfries = 8;\n  float pchicken = 15;\n  float pnuggets = 15\n  float pspaghetti = 10;\n  float pdrink = 5;\n\n  // calculations here\n}\n', 50, 11),
-(12, 'Braces', 'Find the missing braces, it could be an opening braces, or a closing one.', 'int main () \n{\n  int i = 0;\n  for (i = 0; i <= 10; i++) \n  {\n    printf("print this! \\n");\n  }\n', 50, 12),
-(13, 'Parenthesis', 'Find the missing parenthesis, it could be an opening parenthesis, or a closing one.', 'int main () \n{\n  int i = 0;\n  for i = 0; i <= 20; i++) \n  {\n    printf("print this! \\n");\n  }	\n}\n', 50, 13),
-(14, 'Calling functions', 'Fill in the call function statement to be able to let the variable total print the addition.', 'int add (int a, int b)\r\n{\r\n  return a + b;\r\n}\r\n\r\nmain () \r\n{\r\n  int a = 5;\r\n  int b = 10;\r\n  int total = 0;\r\n  total = /** insert here **/ \r\n  printf(“%d”, total); \r\n}\r\n', 50, 14),
-(15, 'Creating functions', 'Fill in the add function statement to be able to let the variable total print the addition.', '/** insert here **/\n{\n  return a + b;\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 50, 15),
-(16, 'Return statements', 'Fill in the return statement of the add function statement to be able to let the variable total print the addition.', 'int add (int a, int b)\n{\n  /** insert here **/\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 50, 16),
-(17, 'Looking for a certain end', 'Find the line of the error!', 'int add (int a, int b)\n{\n  return a + b\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 50, 0),
-(18, 'Forever more', 'Find the line of the error!', 'int add (int a, int b)\n{\n  return a + b;\n}\n\nint main () \n{\n  int i = 0;\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  for (i = 0; i < 9; i+) \n  {\n    total = add(a, b);\n    printf(“%d”, total);\n  } \n}\n', 50, 0),
-(19, 'Elsie is there', 'Find the line of the error!', 'int main () \n{\n  int i = 9;\n  if (i == 8)\n  {\n    printf(“%d”, i);\n  }\n  else (i == 9)\n  {\n    printf(“else”);\n  } \n}\n', 50, 0),
-(20, 'A printing error', 'Find the line of the error!', 'int main () \n{\n  int i = 9;\n  if (i == 8)\n  {\n    print(“%d”, i);\n  }\n  else\n  {\n    printf(“else”);\n  } \n}\n', 50, 0),
-(21, 'If Statements', 'Fill in the if statement to be able to let the character print.', 'main () \r\n{\r\n  char i = ‘y’;\r\n  if ( /** insert here **/ ) \r\n  {\r\n    printf("%c", i);\r\n  }\r\n}\r\n', 50, 17),
-(22, 'Else If Statements', 'Fill in the else if statement to be able to let the word “no” print.', 'main () \r\n{\r\n  char i = ‘y’;\r\n  if (i == ‘n’) \r\n  {\r\n    printf("%c", i);\r\n  }\r\n  else if ( /** insert here **/ )\r\n  {\r\n    printf("no");\r\n  }\r\n}\r\n', 50, 18);
+INSERT INTO `tests` (`T_Num`, `T_Ttl`, `T_Msg`, `T_Cod`, `T_Ans`, `T_Fan`, `T_Pts`, `T_Cor`, `T_Inc`, `A_Num`) VALUES
+(1, 'Variable Declaration (Integer)', 'Create an integer variable named "number" that outputs 14 when 5 is added.', 'int main ()\n{\n  /** insert here **/\n  number = number + 5;\n  printf("%d", number);\n}', 'int number = 9;', 'int main ()\n{\n  int number = 9;\n  number = number + 5;\n  printf("%d", number);\n}', 50, 'Correct! You''ve done a great job!', 'The answer was: int number = 9;\n\nFor reference, the way to declare variables is "[type] [name];". "[=] [value]" comes after if you want to put something in the variable. For example, you could declare int number; or int number = 9. Both are correct.', 1),
+(2, 'Variable Declaration (Character)', 'Create a character variable named "answer" that will store the character ''y'' when inputted.', 'int main () \n{\n  /** insert here **/\n  scanf("%c", &answer);\n  printf("Your answer is: %c", answer);\n}\n', 'char answer;', 'int main () \n{\n  char answer;\n  scanf("%c", &answer);\n  printf("Your answer is: %c", answer);\n}\n', 50, 'Correct! You''ve done a great job!', 'The answer was: char answer;\n\nFor reference, the way to declare variables is "[type] [name];". "[=] [value]" comes after if you want to put something in the variable. For example, you could declare char answer; or char answer = ''y''. Both are correct.', 2),
+(3, 'Variable Declaration (Float)', 'Create a float variable named "gpa" that will store the output of the program.', 'int main () \n{\n  /** insert here **/\n  printf("Your grades for each subject this term: 4.0, 3.5, 3.0, 2.5, 3.5");\n  gpa = 4.0 + 3.5 + 3.0 + 2.5 + 3.5;\n  gpa = gpa / 5;\n}\n', 'float gpa;', 'int main () \n{\n  float gpa;\n  printf("Your grades for each subject this term: 4.0, 3.5, 3.0, 2.5, 3.5");\n  gpa = 4.0 + 3.5 + 3.0 + 2.5 + 3.5;\n  gpa = gpa / 5;\n}\n', 50, 'Correct! You''ve done a great job!', 'The answer was: float gpa;\n\nFor reference, the way to declare variables is "[type] [name];". "[=] [value]" comes after if you want to put something in the variable. For example, you could declare float number; or float number = 9. Both are correct.', 3),
+(4, 'Arrays', 'Make a 10 element array named “numbers” to contain 10 integers.', 'int main () \n{\n  /** insert here **/\n  int i = 0; \n  for (i = 0; i < 10; i++) \n  {\n    Numbers[i] = i;\n  }\n}\n', 'int numbers[10];', 'int main () \n{\n  int numbers[10];\n  int i = 0; \n  for (i = 0; i < 10; i++) \n  {\n    numbers[i] = i;\n  }\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 4),
+(5, 'Input statements', 'Make an input statement that obtains a number for printing.', 'int main () \n{\n  int i = 0; \n  /** insert here **/\n  printf(“%d”, i);\n}\n', 'scanf("%d", &i);', 'int main () \n{\n  int i = 0; \n  scanf("%d", &i);\n  printf(“%d”, i);\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 5),
+(6, 'Output statements', 'Make an output statement that prints i.', 'int main () \n{\n  int i = 0; \n  scanf(“%d”, &i);\n  /** insert here **/\n}\n', 'printf("%d", i);', 'int main () \n{\n  int i = 0; \n  scanf(“%d”, &i);\n  scanf("%d", i);\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 6),
+(7, 'Else Statements', 'Fill in the else statement to be able to let the word “no” print.', 'int main () \n{\n  char i = ‘y’;\n  if (i == ‘n’) \n  {\n    printf("%c", i);\n  }\n  /** insert here **/\n  {\n    printf("no");\n  }\n}\n', 'else', 'int main () \n{\n  char i = ‘y’;\n  if (i == ‘n’) \n  {\n    printf("%c", i);\n  }\n  else\n  {\n    printf("no");\n  }\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 7),
+(8, 'Switch Statements', 'Fill in the switch statement to be able to let the word “no” print.', 'int main () \n{\n  char i = ‘y’;\n  switch ( /** insert here **/ ) \n  {\n    case ‘y’: \n      printf("%c", i); \n      break;\n    case ‘n’:\n      printf(“no”);\n      break;\n  }\n}\n', 'i', 'int main () \n{\n  char i = ‘y’;\n  switch (i) \n  {\n    case ‘y’: \n      printf("%c", i); \n      break;\n    case ‘n’:\n      printf(“no”);\n      break;\n  }\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 8),
+(9, 'For Loops', 'Description: Fill in the for loop properly to be able to output numbers from 0 - 10 using a less than or equal to comparison.', 'int main () \n{\n  int i = 0;\n  for ( /** insert here **/ ; /** insert here **/ ; /** insert here **/ ) \n  {\n    printf("%d \\n", i);\n  }\n}\n', 'i = 0; i <= 9; i++', 'int main () \n{\n  int i = 0;\n  for (i = 0; i <= 9; i++) \n  {\n    printf("%d \\n", i);\n  }\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 9),
+(10, 'While Loops', 'Fill in the while loop to be able to output numbers from 10 - 20 using a less than comparison.', 'int main () \n{\n  int i = 10;\n  while ( /** insert here **/ ) \n  {	 \n    printf("%d \\n", i);\n  }\n}\n', 'i < 20', 'int main () \n{\n  int i = 10;\n  while (i < 20) \n  {	 \n    printf("%d \\n", i);\n  }\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 10),
+(11, 'Semi-colons', 'Find the missing semicolon. Enter the line number!', 'int main () \n{\n  float pburger = 10;\n  float pfries = 8;\n  float pchicken = 15;\n  float pnuggets = 15\n  float pspaghetti = 10;\n  float pdrink = 5;\n\n  // calculations here\n}\n', '5', 'int main () \n{\n  float pburger = 10;\n  float pfries = 8;\n  float pchicken = 15;\n  float pnuggets = 15;\n  float pspaghetti = 10;\n  float pdrink = 5;\n\n  // calculations here\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 11),
+(12, 'Braces', 'Find the missing braces, it could be an opening braces, or a closing one. Enter the line number!', 'int main () \n{\n  int i = 0;\n  for (i = 0; i <= 10; i++) \n  {\n    printf("print this! \\n");\n  }\n', '8', 'int main () \n{\n  int i = 0;\n  for (i = 0; i <= 10; i++) \n  {\n    printf("print this! \\n");\n  }\n}', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 12),
+(13, 'Parenthesis', 'Find the missing parenthesis, it could be an opening parenthesis, or a closing one. Enter the line number!', 'int main () \n{\n  int i = 0;\n  for i = 0; i <= 20; i++) \n  {\n    printf("print this! \\n");\n  }	\n}\n', '4', 'int main () \n{\n  int i = 0;\n  for (i = 0; i <= 20; i++) \n  {\n    printf("print this! \\n");\n  }	\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 13),
+(14, 'Calling functions', 'Fill in the call function statement to be able to let the variable total print the addition.', 'int add (int a, int b)\n{\n  return a + b;\n}\n\nmain () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = /** insert here **/ \n  printf(“%d”, total); \n}\n', 'add(a, b);', 'int add (int a, int b)\n{\n  return a + b;\n}\n\nmain () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 14),
+(15, 'Creating functions', 'Fill in the add function statement to be able to let the variable total print the addition.', '/** insert here **/\n{\n  return a + b;\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 'int add (int a, int b)', 'int add (int a, int b)\n{\n  return a + b;\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 15),
+(16, 'Return statements', 'Fill in the return statement of the add function statement to be able to let the variable total print the addition.', 'int add (int a, int b)\n{\n  /** insert here **/\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 'return a + b;', 'int add (int a, int b)\n{\n  return a + b;\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 16),
+(17, 'Looking for a certain end', 'Find the line of the error!', 'int add (int a, int b)\n{\n  return a + b\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', '3', 'int add (int a, int b)\n{\n  return a + b;\n}\n\nint main () \n{\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  total = add(a, b);\n  printf(“%d”, total); \n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 0),
+(18, 'Forever more', 'Find the line of the error!', 'int add (int a, int b)\n{\n  return a + b;\n}\n\nint main () \n{\n  int i = 0;\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  for (i = 0; i < 9; i+) \n  {\n    total = add(a, b);\n    printf(“%d”, total);\n  } \n}\n', '12', 'int add (int a, int b)\n{\n  return a + b;\n}\n\nint main () \n{\n  int i = 0;\n  int a = 5;\n  int b = 10;\n  int total = 0;\n  for (i = 0; i < 9; i++) \n  {\n    total = add(a, b);\n    printf(“%d”, total);\n  } \n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 0),
+(19, 'Elsie is there', 'Find the line of the error!', 'int main () \n{\n  int i = 9;\n  if (i == 8)\n  {\n    printf(“%d”, i);\n  }\n  else (i == 9)\n  {\n    printf(“else”);\n  } \n}\n', '8', 'int main () \n{\n  int i = 9;\n  if (i == 8)\n  {\n    printf(“%d”, i);\n  }\n  else if (i == 9)\n  {\n    printf(“else”);\n  } \n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 0),
+(20, 'A printing error', 'Find the line of the error!', 'int main () \n{\n  int i = 9;\n  if (i == 8)\n  {\n    print(“%d”, i);\n  }\n  else\n  {\n    printf(“else”);\n  } \n}\n', '6', 'int main () \n{\n  int i = 9;\n  if (i == 8)\n  {\n    printf(“%d”, i);\n  }\n  else\n  {\n    printf(“else”);\n  } \n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 0),
+(21, 'If Statements', 'Fill in the if statement to be able to let the character print using an equal to (==) comparison.', 'main () \n{\n  char i = ‘y’;\n  if ( /** insert here **/ ) \n  {\n    printf("%c", i);\n  }\n}\n', 'i == ''y''', 'main () \n{\n  char i = ‘y’;\n  if (i == ''y'') \n  {\n    printf("%c", i);\n  }\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 17),
+(22, 'Else If Statements', 'Fill in the else if statement to be able to let the word “no” print using an equal to (==) comparison.', 'main () \n{\n  char i = ‘y’;\n  if (i == ‘n’) \n  {\n    printf("%c", i);\n  }\n  else if ( /** insert here **/ )\n  {\n    printf("no");\n  }\n}\n', 'i == ''y''', 'main () \n{\n  char i = ‘y’;\n  if (i == ‘n’) \n  {\n    printf("%c", i);\n  }\n  else if (i == ''y'')\n  {\n    printf("no");\n  }\n}\n', 50, 'Correct! You''ve done a great job!', 'Incorrect!', 18);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `userachievements`
+--
+
+CREATE TABLE `userachievements` (
+  `A_Clr` int(11) NOT NULL DEFAULT '0',
+  `U_Num` int(11) NOT NULL,
+  `A_Num` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `userachievements`
+--
+
+INSERT INTO `userachievements` (`A_Clr`, `U_Num`, `A_Num`) VALUES
+(1, 2, 1),
+(1, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -183,11 +207,29 @@ CREATE TABLE `userquests` (
 
 CREATE TABLE `users` (
   `U_Num` int(11) NOT NULL,
-  `U_Usn` text NOT NULL,
+  `U_Usn` varchar(8) NOT NULL,
   `U_Pas` text NOT NULL,
-  `U_Pts` int(11) NOT NULL,
+  `U_Pts` int(11) NOT NULL DEFAULT '0',
   `U_Ach` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`U_Num`, `U_Usn`, `U_Pas`, `U_Pts`, `U_Ach`) VALUES
+(1, '11331364', 'admin', 0, 0),
+(2, '11331232', 'ayylmao', 100, 2),
+(3, '11729832', 'newuser', 200, 0),
+(4, '11702832', 'newuser', 300, 0),
+(5, '11621325', 'newuser', 400, 0),
+(6, '11464878', 'newuser', 500, 0),
+(7, '1175252', 'newuser', 600, 0),
+(8, '11799992', 'newuser', 700, 0),
+(9, '11782632', 'newuser', 800, 0),
+(10, '11572636', 'newuser', 900, 0),
+(11, '11062523', 'newuser', 1000, 0),
+(12, '11213232', 'newuser', 1100, 0);
 
 --
 -- Indexes for dumped tables
@@ -240,7 +282,7 @@ ALTER TABLE `tests`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `U_Num` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `U_Num` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
