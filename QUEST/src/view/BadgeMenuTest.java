@@ -79,6 +79,8 @@ public class BadgeMenuTest {
 		JButton btnBadge = new JButton("Badge 01");
 		btnBadge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				BadgesDetailMenu nFrame = new BadgesDetailMenu();
+				
 			}
 		});
 		GridBagConstraints gbc_btnBadge = new GridBagConstraints();
@@ -267,6 +269,19 @@ public class BadgeMenuTest {
 		panel_1.add(btnBadge_25, gbc_btnBadge_25);
 		
 		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					//moving windows
+					MainMenu mm = new MainMenu(user);
+					mm.setVisible(true);
+					frame.dispose();
+				} 
+				catch (Exception x) {
+					x.printStackTrace();
+				}
+			}
+		});
 		btnConfirm.setBounds(381, 291, 89, 23);
 		panel.add(btnConfirm);
 	}

@@ -10,6 +10,8 @@ import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BadgesDetailMenu {
 
@@ -45,6 +47,7 @@ public class BadgesDetailMenu {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 394, 284);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
@@ -70,6 +73,11 @@ public class BadgesDetailMenu {
 		scrollPane.setViewportView(txtrDescriptionArea);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+			}
+		});
 		btnBack.setBounds(279, 212, 89, 23);
 		panel.add(btnBack);
 	}

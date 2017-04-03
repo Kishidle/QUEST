@@ -104,8 +104,10 @@ public class ResultMenu {
 		JTextArea txtrDescriptionArea = new JTextArea();
 		txtrDescriptionArea.setText(des);
 		scrollPane_2.setViewportView(txtrDescriptionArea);
-
+		System.out.println(answer.getAnswer());
+		System.out.println(test.getAnswer());
 		if (answer.getAnswer().equals(test.getAnswer())) {
+			
 			JTextArea txtrVerdictArea = new JTextArea();
 			txtrVerdictArea.setText(test.getCorrect());
 			txtrVerdictArea.setLineWrap(true);
