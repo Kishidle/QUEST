@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import model.User;
 import view.Login;
 import view.MainMenu;
 
@@ -32,7 +33,7 @@ public class Profile extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Profile frame = new Profile("", "", 0, 0);
+					Profile frame = new Profile();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +45,12 @@ public class Profile extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Profile(String u, String p, int ac, int pt) {
+	public Profile() {
+		initialize();
+	}
+
+	public void initialize() {
+		User user = new User();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 399, 261);
 		contentPane = new JPanel();
@@ -59,7 +65,7 @@ public class Profile extends JFrame {
 		lblTest.setBounds(10, 22, 114, 99);
 		contentPane.add(lblTest);
 
-		JLabel lblUsername = new JLabel("Username: " + u);
+		JLabel lblUsername = new JLabel("Username: " + user.getUsername());
 		lblUsername.setBounds(153, 22, 200, 14);
 		contentPane.add(lblUsername);
 
@@ -67,7 +73,7 @@ public class Profile extends JFrame {
 		//		userNameTextPane.setBounds(218, 22, 149, 14);
 		//		contentPane.add(userNameTextPane);
 
-		JLabel lblBadgesCollected = new JLabel("Badges Collected: " + ac);
+		JLabel lblBadgesCollected = new JLabel("Badges Collected: " + user.getAchievements());
 		lblBadgesCollected.setBounds(153, 47, 200, 14);
 		contentPane.add(lblBadgesCollected);
 
@@ -75,7 +81,7 @@ public class Profile extends JFrame {
 		//		badgesCollectedTextPane.setBounds(249, 47, 58, 14);
 		//		contentPane.add(badgesCollectedTextPane);
 
-		JLabel levelLabel = new JLabel("Level: " + (pt/100));
+		JLabel levelLabel = new JLabel("Level: " + (user.getPoints()/100));
 		levelLabel.setBounds(153, 72, 200, 14);
 		contentPane.add(levelLabel);
 
@@ -83,7 +89,7 @@ public class Profile extends JFrame {
 		//		levelNumberLabel.setBounds(187, 72, 46, 14);
 		//		contentPane.add(levelNumberLabel);
 
-		JLabel lblExpTillNext = new JLabel("EXP till next level: " + (pt%100));
+		JLabel lblExpTillNext = new JLabel("EXP till next level: " + (user.getPoints()%100));
 		lblExpTillNext.setBounds(153, 97, 200, 14);
 		contentPane.add(lblExpTillNext);
 
@@ -98,10 +104,9 @@ public class Profile extends JFrame {
 					public void run() {
 						try {
 							//moving windows
-							Profile pframe = new Profile(u, p, ac, pt);
-							pframe.setVisible(false);
-							pframe.dispose();
-							new MainMenu(u, p, ac, pt).setVisible(true);
+							MainMenu mframe = new MainMenu();
+							mframe.setVisible(true);
+							dispose();
 						} 
 						catch (Exception e) {
 							e.printStackTrace();

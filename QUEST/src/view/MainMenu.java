@@ -32,7 +32,7 @@ public class MainMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainMenu frame = new MainMenu("", "", 0, 0);
+					MainMenu frame = new MainMenu();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,11 @@ public class MainMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainMenu(String u, String p, int ac, int pt) {
+	public MainMenu() {
+		initialize();
+	}
+	
+	public void initialize() {
 		setTitle("Main Menu");
 		//JOptionPane.showMessageDialog(null, u + " " + p + " " + ac + " " + pt);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,10 +65,9 @@ public class MainMenu extends JFrame {
 					public void run() {
 						try {
 							//moving windows
-							new MainMenu(u, p, ac, pt).setVisible(false);
-							new MainMenu(u, p, ac, pt).dispose();
-							Profile pframe = new Profile(u, p, ac, pt);
+							Profile pframe = new Profile();
 							pframe.setVisible(true);
+							dispose();
 						} 
 						catch (Exception e) {
 							e.printStackTrace();
@@ -84,11 +87,9 @@ public class MainMenu extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					//moving windows
-					new MainMenu(u, p, ac, pt).setVisible(false);
-					new MainMenu(u, p, ac, pt).dispose();
-					TestMenu tframe = new TestMenu(u, p, ac, pt);
-					tframe.initialize(u, p, ac, pt);
-					tframe.setVisible(true);
+					TestMenu tframe = new TestMenu();
+					tframe.initialize();
+					dispose();
 				} 
 				catch (Exception e) {
 					e.printStackTrace();

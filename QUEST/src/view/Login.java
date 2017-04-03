@@ -60,6 +60,10 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		initialize();
+	}
+	
+	public void initialize() {
 		setResizable(false);
 		setTitle("Login Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,18 +117,12 @@ public class Login extends JFrame {
 									int ac = rs.getInt("U_Ach");
 									int pt = rs.getInt("U_Pts");
 
-									// set setters
-									//User.setUsername(u);
-
-									/**
-										User.setPassword(p);
-										User.setAchievements(ac);
-										User.setPoints(pt);
-									 **/
+									setUser(u, p, ac, pt);
 
 									//moving windows
-									MainMenu frame = new MainMenu(u, p, ac, pt);
+									MainMenu frame = new MainMenu();
 									frame.setVisible(true);
+									dispose();
 								} 
 								else {
 									JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password!");
@@ -186,4 +184,13 @@ public class Login extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 
+	
+	public void setUser(String u, String p, int ac, int pt) {
+		// set setters
+		User set = new User();
+		set.setUsername(u);
+		set.setPassword(p);
+		set.setAchievements(ac);
+		set.setPoints(pt);
+	}
 }

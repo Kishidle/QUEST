@@ -1,14 +1,25 @@
 package view;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+
+import model.Test;
+
 import javax.swing.JButton;
 
 public class TestMenu {
@@ -42,16 +53,65 @@ public class TestMenu {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
+		String ttl = "";
+		String des = "";
+		String cod = "";
+		try {
+			Connection conn = null;
+			Statement stmt = null;
+
+			try {
+				Class.forName("com.mysql.jdbc.Driver");	        
+
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+				stmt = (Statement) conn.createStatement();
+
+				String query = "SELECT * FROM tests " +
+						"WHERE A_Num !='0'" +
+						"ORDER BY RAND()" +
+						"LIMIT 1";
+
+				ResultSet rs = stmt.executeQuery(query);
+
+				if (rs.next()) {
+					int rows = rs.getInt(1);
+					int num = rs.getInt("T_Num");
+					ttl = rs.getString("T_Ttl");
+					des = rs.getString("T_Msg");
+					cod = rs.getString("T_Cod");
+					String ans = rs.getString("T_Ans");
+					String fan = rs.getString("T_Fan");
+					int pts = rs.getInt("T_Pts");
+					String cor = rs.getString("T_Cor");
+					String inc = rs.getString("T_Inc");
+					
+					Test test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc);
+				} 
+				else {
+					JOptionPane.showMessageDialog(null, "Nothing found!");
+				}
+			} 
+			catch(Exception a) {
+				System.out.println(a.getMessage());	    	
+				JOptionPane.showMessageDialog(null, "A database error occured.");
+			}		
+
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 385);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle(ttl);
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel lblDescription = new JLabel("Description:");
+		JLabel lblDescription = new JLabel("Description: " + des);
 		lblDescription.setBounds(10, 24, 67, 14);
 		panel.add(lblDescription);
 		
@@ -60,10 +120,10 @@ public class TestMenu {
 		panel.add(scrollPane);
 		
 		JTextArea txtrCodeArea = new JTextArea();
-		txtrCodeArea.setText("code area");
+		txtrCodeArea.setText(cod);
 		scrollPane.setViewportView(txtrCodeArea);
 		
-		JLabel lblAnswer = new JLabel("Answer:");
+		JLabel lblAnswer = new JLabel("Answer: ");
 		lblAnswer.setBounds(10, 251, 46, 14);
 		panel.add(lblAnswer);
 		
@@ -73,6 +133,23 @@ public class TestMenu {
 		textField.setColumns(10);
 		
 		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							//moving windows
+							ResultMenu rm = new ResultMenu();
+							rm.initialize();
+							frame.dispose();
+						} 
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
 		btnSubmit.setBounds(335, 312, 89, 23);
 		panel.add(btnSubmit);
 	}
