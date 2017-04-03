@@ -33,8 +33,8 @@ public class Profile extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Profile frame = new Profile();
-					frame.setVisible(true);
+					//Profile frame = new Profile();
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -45,12 +45,11 @@ public class Profile extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Profile() {
-		initialize();
+	public Profile(User user) {
+		initialize(user);
 	}
 
-	public void initialize() {
-		User user = new User();
+	public void initialize(User user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 399, 261);
 		contentPane = new JPanel();
@@ -104,7 +103,7 @@ public class Profile extends JFrame {
 					public void run() {
 						try {
 							//moving windows
-							MainMenu mframe = new MainMenu();
+							MainMenu mframe = new MainMenu(user);
 							mframe.setVisible(true);
 							dispose();
 						} 

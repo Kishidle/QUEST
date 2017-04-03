@@ -117,10 +117,14 @@ public class Login extends JFrame {
 									int ac = rs.getInt("U_Ach");
 									int pt = rs.getInt("U_Pts");
 
-									setUser(u, p, ac, pt);
+									User set = new User();
+									set.setUsername(u);
+									set.setPassword(p);
+									set.setAchievements(ac);
+									set.setPoints(pt);
 
 									//moving windows
-									MainMenu frame = new MainMenu();
+									MainMenu frame = new MainMenu(set);
 									frame.setVisible(true);
 									dispose();
 								} 
@@ -184,13 +188,4 @@ public class Login extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 
-	
-	public void setUser(String u, String p, int ac, int pt) {
-		// set setters
-		User set = new User();
-		set.setUsername(u);
-		set.setPassword(p);
-		set.setAchievements(ac);
-		set.setPoints(pt);
-	}
 }

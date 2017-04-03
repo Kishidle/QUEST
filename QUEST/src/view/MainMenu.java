@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.User;
+
 import java.awt.Window.Type;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -32,8 +35,8 @@ public class MainMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainMenu frame = new MainMenu();
-					frame.setVisible(true);
+					//MainMenu frame = new MainMenu(User user);
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,11 +47,11 @@ public class MainMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainMenu() {
-		initialize();
+	public MainMenu(User user) {
+		initialize(user);
 	}
 	
-	public void initialize() {
+	public void initialize(User user) {
 		setTitle("Main Menu");
 		//JOptionPane.showMessageDialog(null, u + " " + p + " " + ac + " " + pt);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,7 +68,7 @@ public class MainMenu extends JFrame {
 					public void run() {
 						try {
 							//moving windows
-							Profile pframe = new Profile();
+							Profile pframe = new Profile(user);
 							pframe.setVisible(true);
 							dispose();
 						} 
@@ -80,15 +83,12 @@ public class MainMenu extends JFrame {
 		
 		JButton bRandomTest = new JButton("Test");
 		bRandomTest.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		
-		JButton bQuests = new JButton("Quests");
-		bQuests.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		bQuests.addActionListener(new ActionListener() {
+		bRandomTest.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					//moving windows
-					TestMenu tframe = new TestMenu();
-					tframe.initialize();
+					TestMenu tframe = new TestMenu(user);
+					tframe.initialize(user);
 					dispose();
 				} 
 				catch (Exception e) {
@@ -96,6 +96,9 @@ public class MainMenu extends JFrame {
 				}
 			}
 		});
+		
+		JButton bQuests = new JButton("Quests");
+		bQuests.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton bLeaderboards = new JButton("Rank");
 		bLeaderboards.setFont(new Font("Tahoma", Font.PLAIN, 20));

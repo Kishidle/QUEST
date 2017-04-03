@@ -18,7 +18,9 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import model.Answer;
 import model.Test;
+import model.User;
 
 import javax.swing.JButton;
 
@@ -34,8 +36,8 @@ public class TestMenu {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestMenu window = new TestMenu();
-					window.frame.setVisible(true);
+					//TestMenu window = new TestMenu();
+					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,17 +48,19 @@ public class TestMenu {
 	/**
 	 * Create the application.
 	 */
-	public TestMenu() {
-		initialize();
+	public TestMenu(User user) {
+		initialize(user);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initialize() {
+	public void initialize(User user) {
 		String ttl = "";
 		String des = "";
 		String cod = "";
+		Test test = new Test();
+		//JOptionPane.showMessageDialog(null, message);
 		try {
 			Connection conn = null;
 			Statement stmt = null;
@@ -86,7 +90,7 @@ public class TestMenu {
 					String cor = rs.getString("T_Cor");
 					String inc = rs.getString("T_Inc");
 					
-					Test test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc);
+					test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc);
 				} 
 				else {
 					JOptionPane.showMessageDialog(null, "Nothing found!");
@@ -132,15 +136,18 @@ public class TestMenu {
 		panel.add(textField);
 		textField.setColumns(10);
 		
+		final Test ptest = test;
+		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EventQueue.invokeLater(new Runnable() {
-					public void run() {
+					public void run() { 
 						try {
+							Answer man = new Answer(textField.getText());
 							//moving windows
-							ResultMenu rm = new ResultMenu();
-							rm.initialize();
+							ResultMenu rm = new ResultMenu(user, ptest, man);
+							rm.initialize(user, ptest, man);
 							frame.dispose();
 						} 
 						catch (Exception e) {
