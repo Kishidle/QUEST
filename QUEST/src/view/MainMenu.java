@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class MainMenu extends JFrame {
 
@@ -31,7 +32,7 @@ public class MainMenu extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainMenu frame = new MainMenu();
+					MainMenu frame = new MainMenu("", "", 0, 0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,8 +44,9 @@ public class MainMenu extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainMenu() {
+	public MainMenu(String u, String p, int ac, int pt) {
 		setTitle("Main Menu");
+		//JOptionPane.showMessageDialog(null, u + " " + p + " " + ac + " " + pt);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 300, 400);
 		contentPane = new JPanel();
@@ -53,6 +55,25 @@ public class MainMenu extends JFrame {
 		
 		JButton bProfile = new JButton("Status");
 		bProfile.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		bProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							//moving windows
+							new MainMenu(u, p, ac, pt).setVisible(false);
+							new MainMenu(u, p, ac, pt).dispose();
+							Profile pframe = new Profile(u, p, ac, pt);
+							pframe.setVisible(true);
+						} 
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		
 		
 		JButton bRandomTest = new JButton("Test");
 		bRandomTest.setFont(new Font("Tahoma", Font.PLAIN, 20));

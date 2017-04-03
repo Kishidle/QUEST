@@ -11,6 +11,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 import model.User;
+import view.MainMenu;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -82,67 +83,67 @@ public class Login extends JFrame {
 		lLogin.setFont(new Font("Tahoma", Font.PLAIN, 24));
 
 		JButton btnConfirm = new JButton("Confirm");
-		
+
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			  EventQueue.invokeLater(new Runnable() {
-						public void run() {
+				EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							String username = fNum.getText();
+							String password = fPassword.getText();
+
+							Connection conn = null;
+							Statement stmt = null;
+
 							try {
-								String username = fNum.getText();
-								String password = fPassword.getText();
+								Class.forName("com.mysql.jdbc.Driver");	        
 
-								Connection conn = null;
-								Statement stmt = null;
+								conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+								stmt = (Statement) conn.createStatement();
 
-								try {
-									Class.forName("com.mysql.jdbc.Driver");	        
+								String query = "SELECT * FROM users " +
+										"WHERE U_Usn ='" + username + "' AND U_Pas ='" + password + "'";
 
-									conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
-									stmt = (Statement) conn.createStatement();
+								ResultSet rs = stmt.executeQuery(query);
 
-									String query = "SELECT * FROM users " +
-											"WHERE U_Usn ='" + username + "' AND U_Pas ='" + password + "'";
+								if (rs.next()) {
+									int rows = rs.getInt(1); 
+									String u = rs.getString("U_Usn");
+									String p = rs.getString("U_Pas");
+									int ac = rs.getInt("U_Ach");
+									int pt = rs.getInt("U_Pts");
 
-									ResultSet rs = stmt.executeQuery(query);
+									// set setters
+									//User.setUsername(u);
 
-									if (rs.next()) {
-										int rows = rs.getInt(1); 
-										String u = rs.getString("U_Usn");
-										String p = rs.getString("U_Pas");
-										int ac = rs.getInt("U_Ach");
-										int pt = rs.getInt("U_Pts");
-
-										/** set setters
-										User.setUsername(u);
+									/**
 										User.setPassword(p);
 										User.setAchievements(ac);
 										User.setPoints(pt);
-										**/
-										
-										//moving windows
-										Login lframe = new Login();
-										lframe.setVisible(false);
-										MainMenu frame = new MainMenu();
-										frame.setVisible(true);
-									} 
-									else {
-										JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password!");
-									}
+									 **/
+
+									//moving windows
+									MainMenu frame = new MainMenu(u, p, ac, pt);
+									frame.setVisible(true);
 								} 
-								catch(Exception a) {
-									System.out.println(a.getMessage());	    	
-									JOptionPane.showMessageDialog(null, "A login error has occured.");
-								}		
-								
+								else {
+									JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password!");
+								}
 							} 
-							catch (Exception e) {
-								e.printStackTrace();
-							}
+							catch(Exception a) {
+								System.out.println(a.getMessage());	    	
+								JOptionPane.showMessageDialog(null, "A login error has occured.");
+							}		
+
+						} 
+						catch (Exception e) {
+							e.printStackTrace();
 						}
-					});
+					}
+				});
 			}
 		});
-		
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 				gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -183,16 +184,6 @@ public class Login extends JFrame {
 						.addContainerGap(23, Short.MAX_VALUE))
 				);
 		contentPane.setLayout(gl_contentPane);
-	}
-
-	class ButtonClickListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			String command = e.getActionCommand();  
-			if(command.equals("Confirm")) {
-				JOptionPane.showMessageDialog(null, "hi");
-						
-			}
-		}	
 	}
 
 }
