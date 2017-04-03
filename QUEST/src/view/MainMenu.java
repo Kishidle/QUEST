@@ -82,6 +82,17 @@ public class MainMenu extends JFrame {
 		bQuests.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		bQuests.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					//moving windows
+					new MainMenu(u, p, ac, pt).setVisible(false);
+					new MainMenu(u, p, ac, pt).dispose();
+					TestMenu tframe = new TestMenu(u, p, ac, pt);
+					tframe.initialize(u, p, ac, pt);
+					tframe.setVisible(true);
+				} 
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		
