@@ -60,7 +60,12 @@ public class TestMenu {
 		String des = "";
 		String cod = "";
 		Test test = new Test();
-		//JOptionPane.showMessageDialog(null, message);
+		JOptionPane.showMessageDialog(null, "test");
+				
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 385);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		try {
 			Connection conn = null;
 			Statement stmt = null;
@@ -105,12 +110,10 @@ public class TestMenu {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 385);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle(ttl);
-		
+		frame.setVisible(true);
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);

@@ -55,6 +55,7 @@ public class ResultMenu {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setTitle(test.getTitle());
+		frame.setVisible(true);
 
 		JLabel lblDescription = new JLabel("Description: " + test.getDescription());
 		lblDescription.setBounds(10, 11, 64, 14);

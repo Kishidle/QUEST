@@ -88,7 +88,7 @@ public class MainMenu extends JFrame {
 				try {
 					//moving windows
 					TestMenu tframe = new TestMenu(user);
-					tframe.initialize(user);
+					//tframe.initialize(user);
 					dispose();
 				} 
 				catch (Exception e) {
