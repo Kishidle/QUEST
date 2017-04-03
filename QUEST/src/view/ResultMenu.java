@@ -42,7 +42,7 @@ public class ResultMenu {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 385);
+		frame.setBounds(100, 100, 450, 484);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -51,11 +51,11 @@ public class ResultMenu {
 		frame.getContentPane().add(lblDescription);
 		
 		JLabel lblVerdict = new JLabel("Verdict");
-		lblVerdict.setBounds(10, 270, 46, 14);
+		lblVerdict.setBounds(10, 257, 46, 14);
 		frame.getContentPane().add(lblVerdict);
 		
 		JButton btnConfirm = new JButton("Confirm");
-		btnConfirm.setBounds(335, 317, 89, 23);
+		btnConfirm.setBounds(335, 411, 89, 23);
 		frame.getContentPane().add(btnConfirm);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -65,5 +65,13 @@ public class ResultMenu {
 		JTextArea txtrCodeArea = new JTextArea();
 		txtrCodeArea.setText("code area");
 		scrollPane.setViewportView(txtrCodeArea);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 280, 414, 120);
+		frame.getContentPane().add(scrollPane_1);
+		
+		JTextArea txtrVerdictArea = new JTextArea();
+		txtrVerdictArea.setText("verdict area");
+		scrollPane_1.setViewportView(txtrVerdictArea);
 	}
 }
