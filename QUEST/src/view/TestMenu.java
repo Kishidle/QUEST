@@ -78,7 +78,7 @@ public class TestMenu {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
-				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "password");	
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
 				stmt = (Statement) conn.createStatement();
 
 				String query = "SELECT * FROM tests " +
@@ -175,6 +175,9 @@ public class TestMenu {
 		
 		JTextArea txtrDescriptionArea = new JTextArea();
 		txtrDescriptionArea.setText(des);
+		txtrDescriptionArea.setLineWrap(true);
+		txtrDescriptionArea.setWrapStyleWord(true);
+		txtrDescriptionArea.setEditable(false);
 		scrollPane_1.setViewportView(txtrDescriptionArea);
 	}
 }

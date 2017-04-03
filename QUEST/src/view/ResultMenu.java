@@ -102,12 +102,14 @@ public class ResultMenu {
 		frame.getContentPane().add(scrollPane_2);
 		
 		JTextArea txtrDescriptionArea = new JTextArea();
-		txtrDescriptionArea.setText(des);
+		txtrDescriptionArea.setText(test.getDescription());
+		txtrDescriptionArea.setLineWrap(true);
+		txtrDescriptionArea.setWrapStyleWord(true);
+		txtrDescriptionArea.setEditable(false);
 		scrollPane_2.setViewportView(txtrDescriptionArea);
 		System.out.println(answer.getAnswer());
 		System.out.println(test.getAnswer());
 		if (answer.getAnswer().equals(test.getAnswer())) {
-			
 			JTextArea txtrVerdictArea = new JTextArea();
 			txtrVerdictArea.setText(test.getCorrect());
 			txtrVerdictArea.setLineWrap(true);
@@ -124,6 +126,5 @@ public class ResultMenu {
 			scrollPane_1.setViewportView(txtrVerdictArea);
 		}
 		
-		JOptionPane.showMessageDialog(null, test.getCorrect() + " " + test.getIncorrect());
 	}
 }
