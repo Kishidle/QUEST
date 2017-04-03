@@ -102,6 +102,19 @@ public class MainMenu extends JFrame {
 		
 		JButton bLeaderboards = new JButton("Rank");
 		bLeaderboards.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		bLeaderboards.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					//moving windows
+					LeaderboardMenu Lframe = new LeaderboardMenu(user);
+					//tframe.initialize(user);
+					dispose();
+				} 
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		
 		JLabel lMessage = new JLabel("What is your quest for today?");
 		lMessage.setFont(new Font("Tahoma", Font.PLAIN, 18));
