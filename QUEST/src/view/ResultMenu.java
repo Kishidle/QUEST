@@ -40,13 +40,13 @@ public class ResultMenu {
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public ResultMenu(User user, Test test, Answer answer, String des) {
-		initialize(user, test, answer, des);
+	public ResultMenu(User user, Test test, Answer answer, String des, int pts) {
+		initialize(user, test, answer, des, pts);
 	}
 
 
 	@SuppressWarnings("null")
-	public void initialize(User user, Test test, Answer answer, String des) {
+	public void initialize(User user, Test test, Answer answer, String des, int pts) {
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 554);

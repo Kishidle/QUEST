@@ -65,6 +65,7 @@ public class TestMenu {
 		String ttl = "";
 		
 		String cod = "";
+		int pts = 0;
 		Test test = new Test();
 				
 		frame = new JFrame();
@@ -96,7 +97,7 @@ public class TestMenu {
 					cod = rs.getString("T_Cod");
 					String ans = rs.getString("T_Ans");
 					String fan = rs.getString("T_Fan");
-					int pts = rs.getInt("T_Pts");
+					pts = rs.getInt("T_Pts");
 					String cor = rs.getString("T_Cor");
 					String inc = rs.getString("T_Inc");
 					
@@ -117,7 +118,7 @@ public class TestMenu {
 		}
 
 		
-		frame.setTitle(ttl);
+		frame.setTitle(ttl + " / Points: " + pts);
 		frame.setVisible(true);
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
@@ -146,6 +147,7 @@ public class TestMenu {
 		textField.setColumns(10);
 		
 		final Test ptest = test;
+		final int pt = pts;
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
@@ -155,7 +157,7 @@ public class TestMenu {
 						try {
 							Answer man = new Answer(textField.getText());
 							//moving windows
-							ResultMenu rm = new ResultMenu(user, ptest, man, des);
+							ResultMenu rm = new ResultMenu(user, ptest, man, des, pt);
 							//rm.initialize(user, ptest, man);
 							frame.dispose();
 						} 
