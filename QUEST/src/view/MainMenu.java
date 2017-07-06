@@ -17,6 +17,8 @@ import javax.swing.JSeparator;
 import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -53,6 +55,21 @@ public class MainMenu extends JFrame {
 	
 	public void initialize(User user) {
 		setTitle("Main Menu");
+		try{
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		}
+		catch (UnsupportedLookAndFeelException e) {
+		       // handle exception
+		   }
+		catch (ClassNotFoundException e) {
+		       // handle exception
+		   }
+		catch (InstantiationException e) {
+		       // handle exception
+		   }
+		catch (IllegalAccessException e) {
+		       // handle exception
+		   }
 		//JOptionPane.showMessageDialog(null, u + " " + p + " " + ac + " " + pt);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 417, 445);

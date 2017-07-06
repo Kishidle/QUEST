@@ -23,6 +23,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -62,9 +64,25 @@ public class Login extends JFrame {
 	 */
 	public Login() {
 		initialize();
+		
 	}
 	
 	public void initialize() {
+		try{
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		}
+		catch (UnsupportedLookAndFeelException e) {
+		       // handle exception
+		   }
+		catch (ClassNotFoundException e) {
+		       // handle exception
+		   }
+		catch (InstantiationException e) {
+		       // handle exception
+		   }
+		catch (IllegalAccessException e) {
+		       // handle exception
+		   }
 		setResizable(false);
 		setTitle("Login Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
