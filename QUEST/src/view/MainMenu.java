@@ -55,21 +55,7 @@ public class MainMenu extends JFrame {
 	
 	public void initialize(User user) {
 		setTitle("Main Menu");
-		try{
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-		}
-		catch (UnsupportedLookAndFeelException e) {
-		       // handle exception
-		   }
-		catch (ClassNotFoundException e) {
-		       // handle exception
-		   }
-		catch (InstantiationException e) {
-		       // handle exception
-		   }
-		catch (IllegalAccessException e) {
-		       // handle exception
-		   }
+		
 		//JOptionPane.showMessageDialog(null, u + " " + p + " " + ac + " " + pt);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 417, 445);
