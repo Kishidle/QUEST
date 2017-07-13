@@ -3,11 +3,16 @@ package view;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
 
 import model.Answer;
 import model.Test;
@@ -40,13 +45,13 @@ public class ResultMenu {
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public ResultMenu(User user, Test test, Answer answer, String des, int pts) {
-		initialize(user, test, answer, des, pts);
+	public ResultMenu(User user, Test test, Answer answer, String des, int pts, int ach) {
+		initialize(user, test, answer, des, pts, ach);
 	}
 
 
 	@SuppressWarnings("null")
-	public void initialize(User user, Test test, Answer answer, String des, int pts) {
+	public void initialize(User user, Test test, Answer answer, String des, int pts, int ach) {
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 554);
@@ -109,6 +114,7 @@ public class ResultMenu {
 		scrollPane_2.setViewportView(txtrDescriptionArea);
 		System.out.println(answer.getAnswer());
 		System.out.println(test.getAnswer());
+		
 		if (answer.getAnswer().equals(test.getAnswer())) {
 			JTextArea txtrVerdictArea = new JTextArea();
 			txtrVerdictArea.setText(test.getCorrect());
@@ -116,6 +122,52 @@ public class ResultMenu {
 			txtrVerdictArea.setWrapStyleWord(true);
 			txtrVerdictArea.setEditable(false);
 			scrollPane_1.setViewportView(txtrVerdictArea);
+			
+			//inserting into database
+			try {
+				Connection conn = null;
+				Statement stmt = null;
+
+				try {
+					Class.forName("com.mysql.jdbc.Driver");	        
+
+					conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+					stmt = (Statement) conn.createStatement();
+
+					String query = "UPDATE users " +
+								   "SET U_Pts = U_Pts + " + pts + " " +
+							       "WHERE U_Num = " +  + " ";
+
+					ResultSet rs = stmt.executeQuery(query);
+
+					if (rs.next()) {
+						int rows = rs.getInt(1);
+						int num = rs.getInt("T_Num");
+						ttl = rs.getString("T_Ttl");
+						des = rs.getString("T_Msg");
+						cod = rs.getString("T_Cod");
+						String ans = rs.getString("T_Ans");
+						String fan = rs.getString("T_Fan");
+						pts = rs.getInt("T_Pts");
+						String cor = rs.getString("T_Cor");
+						String inc = rs.getString("T_Inc");
+						nach = rs.getInt("A_Num");
+						
+						test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc, nach);
+					} 
+					else {
+						JOptionPane.showMessageDialog(null, "Nothing found!");
+					}
+				} 
+				catch(Exception a) {
+					System.out.println(a.getMessage());	    	
+					JOptionPane.showMessageDialog(null, "A database error occured.");
+				}		
+
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		else {
 			JTextArea txtrVerdictArea = new JTextArea();

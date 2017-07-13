@@ -63,9 +63,9 @@ public class TestMenu {
 	 */
 	public void initialize(User user) {
 		String ttl = "";
-		
 		String cod = "";
 		int pts = 0;
+		int nach = 0;
 		Test test = new Test();
 				
 		frame = new JFrame();
@@ -100,8 +100,9 @@ public class TestMenu {
 					pts = rs.getInt("T_Pts");
 					String cor = rs.getString("T_Cor");
 					String inc = rs.getString("T_Inc");
+					nach = rs.getInt("A_Num");
 					
-					test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc);
+					test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc, nach);
 				} 
 				else {
 					JOptionPane.showMessageDialog(null, "Nothing found!");
@@ -148,6 +149,7 @@ public class TestMenu {
 		
 		final Test ptest = test;
 		final int pt = pts;
+		final int ach = nach;
 		
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.addActionListener(new ActionListener() {
@@ -157,7 +159,7 @@ public class TestMenu {
 						try {
 							Answer man = new Answer(textField.getText());
 							//moving windows
-							ResultMenu rm = new ResultMenu(user, ptest, man, des, pt);
+							ResultMenu rm = new ResultMenu(user, ptest, man, des, pt, ach);
 							//rm.initialize(user, ptest, man);
 							frame.dispose();
 						} 

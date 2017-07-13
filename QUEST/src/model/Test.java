@@ -21,6 +21,7 @@ public class Test {
 	private int points;
 	private String correct;
 	private String incorrect;
+	private int achievement;
 	
 	/**
 	 * Creates a blank representation for <code>Test</code> model.
@@ -29,7 +30,7 @@ public class Test {
 		
 	}
 
-	public Test(int number, String title, String description, String code, String answer, String fanswer, int points, String correct, String incorrect) {
+	public Test(int number, String title, String description, String code, String answer, String fanswer, int points, String correct, String incorrect, int achievement) {
 		this.number = number;
 		this.title = title;
 		this.description = description;
@@ -39,6 +40,7 @@ public class Test {
 		this.points = points;
 		this.correct = correct;
 		this.incorrect = incorrect;
+		this.achievement = achievement;
 	}
 
 	public int getNumber() {
@@ -111,5 +113,13 @@ public class Test {
 	
 	public void setIncorrect(String incorrect) {
 		this.incorrect = incorrect;
+	}
+	
+	public int getAchievement() {
+		return achievement;
+	}
+	
+	public void setAchievement(int achievement) {
+		this.achievement = achievement;
 	}
 }

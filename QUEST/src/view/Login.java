@@ -129,12 +129,14 @@ public class Login extends JFrame {
 
 								if (rs.next()) {
 									int rows = rs.getInt(1); 
+									int num = rs.getInt("U_Num");
 									String u = rs.getString("U_Usn");
 									String p = rs.getString("U_Pas");
 									int ac = rs.getInt("U_Ach");
 									int pt = rs.getInt("U_Pts");
 
 									User set = new User();
+									set.setUserNumber(num);
 									set.setUsername(u);
 									set.setPassword(p);
 									set.setAchievements(ac);

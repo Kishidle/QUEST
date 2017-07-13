@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class User {
 
+	private int usernumber;
 	private String username;
 	private String password;
 	private int achievements;
@@ -31,13 +32,22 @@ public class User {
 	 * @param achievements User Achievements 
 	 * @param points User Points 
 	 */
-	public User(String username, String password, int achievements, int points) {
+	public User(int usernumber, String username, String password, int achievements, int points) {
+		this.usernumber = usernumber;
 		this.username = username;
 		this.password = password;
 		this.achievements = achievements;
 		this.points = points;
 	}
 
+	public int getUserNumber() {
+		return usernumber;
+	}
+
+	public void setUserNumber(int usernumber) {
+		this.usernumber = usernumber;
+	}
+	
 	public String getUsername() {
 		return username;
 	}
