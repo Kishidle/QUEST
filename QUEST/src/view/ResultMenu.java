@@ -123,41 +123,49 @@ public class ResultMenu {
 			txtrVerdictArea.setEditable(false);
 			scrollPane_1.setViewportView(txtrVerdictArea);
 			
-			//inserting into database
+			//inserting into database, adding points
 			try {
 				Connection conn = null;
-				Statement stmt = null;
+				java.sql.Statement stmt = null;
 
 				try {
 					Class.forName("com.mysql.jdbc.Driver");	        
 
 					conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
 					stmt = (Statement) conn.createStatement();
-
-					String query = "UPDATE users " +
+					
+					String testquery = "SELECT * " +
+									   "FROM userachievements " +
+									   "WHERE U_Num = " + user.getUserNumber() + " AND A_Num = " + ach;
+					
+					ResultSet achievements = stmt.executeQuery(testquery);
+					
+					if (achievements.next()) {
+						String query = "UPDATE users " +
 								   "SET U_Pts = U_Pts + " + pts + " " +
-							       "WHERE U_Num = " +  + " ";
+							       "WHERE U_Num = " + user.getUserNumber() + " ";
 
-					ResultSet rs = stmt.executeQuery(query);
-
-					if (rs.next()) {
-						int rows = rs.getInt(1);
-						int num = rs.getInt("T_Num");
-						ttl = rs.getString("T_Ttl");
-						des = rs.getString("T_Msg");
-						cod = rs.getString("T_Cod");
-						String ans = rs.getString("T_Ans");
-						String fan = rs.getString("T_Fan");
-						pts = rs.getInt("T_Pts");
-						String cor = rs.getString("T_Cor");
-						String inc = rs.getString("T_Inc");
-						nach = rs.getInt("A_Num");
-						
-						test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc, nach);
+						ResultSet rs = stmt.executeQuery(query);
+						user.setAchievements(user.getAchievements() + 1);
+						user.setPoints((int) (user.getPoints() + Math.floor(pts/5)));
 					} 
 					else {
-						JOptionPane.showMessageDialog(null, "Nothing found!");
+						String query = "UPDATE users " +
+								   "SET U_Pts = U_Pts + " + pts + " AND U_Ach = U_Ach + 1 " +
+							       "WHERE U_Num = " + user.getUserNumber() + " ";
+
+						ResultSet rs = stmt.executeQuery(query);
+						
+						query = "INSERT INTO userachievements " +
+						        "(U_Num, A_Num)" +
+								"VALUES (" + user.getUserNumber() + ", " + ach + ")";
+								
+						JOptionPane.showMessageDialog(null, "You have obtained an achievement!");
+						user.setAchievements(user.getAchievements() + 1);
+						user.setPoints(user.getPoints() + pts);
 					}
+					
+					
 				} 
 				catch(Exception a) {
 					System.out.println(a.getMessage());	    	
