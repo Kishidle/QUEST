@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.alee.laf.WebLookAndFeel;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -17,8 +18,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
@@ -67,9 +71,9 @@ public class Login extends JFrame {
 		
 	}
 	
-	public void initialize() {
+	public void initialize() throws FontFormatException, IOException {
 		try{
-			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
 		}
 		catch (UnsupportedLookAndFeelException e) {
 		       // handle exception
@@ -83,6 +87,12 @@ public class Login extends JFrame {
 		catch (IllegalAccessException e) {
 		       // handle exception
 		   }
+		
+		InputStream is = Login.class.getResourceAsStream("res/Gamer.ttf");
+		Font font = Font.createFont(Font.TRUETYPE_FONT, is);
+		Font sizedFont = font.deriveFont(12f);
+		
+		
 		setResizable(false);
 		setTitle("Login Page");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
