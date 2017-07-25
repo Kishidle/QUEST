@@ -65,32 +65,32 @@ public class Login extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
+	 * @throws FontFormatException 
 	 */
-	public Login() {
+	public Login() throws FontFormatException, IOException {
 		initialize();
 		
 	}
 	
 	public void initialize() throws FontFormatException, IOException {
-		try{
-			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
-		}
-		catch (UnsupportedLookAndFeelException e) {
-		       // handle exception
-		   }
-		catch (ClassNotFoundException e) {
-		       // handle exception
-		   }
-		catch (InstantiationException e) {
-		       // handle exception
-		   }
-		catch (IllegalAccessException e) {
-		       // handle exception
-		   }
 		
-		InputStream is = Login.class.getResourceAsStream("res/Gamer.ttf");
-		Font font = Font.createFont(Font.TRUETYPE_FONT, is);
-		Font sizedFont = font.deriveFont(12f);
+		try {
+			UIManager.setLookAndFeel(WebLookAndFeel.class.getCanonicalName());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		
 		
 		setResizable(false);
@@ -119,6 +119,7 @@ public class Login extends JFrame {
 				EventQueue.invokeLater(new Runnable() {
 					public void run() {
 						try {
+							
 							String username = fNum.getText();
 							String password = String.valueOf(fPassword.getPassword());
 							System.out.print(password);
