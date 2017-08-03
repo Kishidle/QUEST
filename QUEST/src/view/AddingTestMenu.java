@@ -71,7 +71,7 @@ public class AddingTestMenu {
 		Test test = new Test();
 				
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 600);
+		frame.setBounds(100, 100, 450, 651);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.setTitle("Adding a new test...");
@@ -81,24 +81,24 @@ public class AddingTestMenu {
 		panel.setLayout(null);
 		
 		JLabel lblTitle = new JLabel("Title: ");
-		lblTitle.setBounds(10, 24, 67, 14);
+		lblTitle.setBounds(10, 11, 67, 14);
 		panel.add(lblTitle);
 		
 		textField = new JTextField();
-		textField.setBounds(87, 24, 337, 20);
+		textField.setBounds(87, 46, 337, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("Description: ");
-		lblDescription.setBounds(10, 84, 89, 14);
+		lblDescription.setBounds(10, 93, 89, 14);
 		panel.add(lblDescription);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 175, 414, 168);
+		scrollPane.setBounds(10, 213, 414, 168);
 		panel.add(scrollPane);
 		
 		JLabel lblTest = new JLabel("Test Code: ");
-		lblTest.setBounds(10, 20, 89, 14);
+		lblTest.setBounds(10, 49, 89, 14);
 		panel.add(lblTest);
 		
 		JTextArea txtrCodeArea = new JTextArea();
@@ -106,12 +106,8 @@ public class AddingTestMenu {
 		txtrCodeArea.setEditable(true);
 		scrollPane.setViewportView(txtrCodeArea);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 49, 414, 59);
-		panel.add(scrollPane_1);
-		
 		JLabel lblAns = new JLabel("Final Answer Code: ");
-		lblAns.setBounds(10, 84, 89, 14);
+		lblAns.setBounds(10, 188, 110, 14);
 		panel.add(lblAns);
 		
 		JTextArea txtAnsCode = new JTextArea();
@@ -120,36 +116,36 @@ public class AddingTestMenu {
 		scrollPane.setViewportView(txtAnsCode);
 		
 		JScrollPane scrollPane_11 = new JScrollPane();
-		scrollPane_11.setBounds(10, 49, 414, 59);
+		scrollPane_11.setBounds(10, 118, 414, 59);
 		panel.add(scrollPane_11);
 		
 		JTextArea txtrDescriptionArea = new JTextArea();
+		scrollPane_11.setViewportView(txtrDescriptionArea);
 		txtrDescriptionArea.setText("Description here...");
 		txtrDescriptionArea.setLineWrap(true);
 		txtrDescriptionArea.setWrapStyleWord(true);
 		txtrDescriptionArea.setEditable(false);
-		scrollPane_11.setViewportView(txtrDescriptionArea);
 		
 		JLabel lblPoints = new JLabel("Points: ");
-		lblPoints.setBounds(10, 420, 67, 14);
+		lblPoints.setBounds(10, 509, 67, 14);
 		panel.add(lblPoints);
 		
 		pointField = new JTextField();
-		pointField.setBounds(87, 426, 337, 20);
+		pointField.setBounds(111, 426, 313, 20);
 		panel.add(pointField);
 		pointField.setColumns(10);
 		
 		JLabel lblCorrect = new JLabel("Correct Message: ");
-		lblCorrect.setBounds(10, 420, 67, 14);
+		lblCorrect.setBounds(10, 469, 89, 14);
 		panel.add(lblCorrect);
 		
 		correctField = new JTextField();
-		correctField.setBounds(87, 466, 337, 20);
+		correctField.setBounds(111, 466, 313, 20);
 		panel.add(correctField);
 		correctField.setColumns(10);
 		
 		JLabel lblIncorrect = new JLabel("Incorrect Message: ");
-		lblIncorrect.setBounds(10, 420, 67, 14);
+		lblIncorrect.setBounds(10, 429, 101, 14);
 		panel.add(lblIncorrect);
 		
 		incorrectField = new JTextField();
@@ -158,11 +154,11 @@ public class AddingTestMenu {
 		incorrectField.setColumns(10);
 		
 		JLabel lblAnsw = new JLabel("Answer: ");
-		lblAnsw.setBounds(10, 549, 67, 14);
+		lblAnsw.setBounds(10, 540, 67, 14);
 		panel.add(lblAnsw);
 		
 		answerField = new JTextField();
-		answerField.setBounds(87, 576, 337, 20);
+		answerField.setBounds(87, 537, 337, 20);
 		panel.add(answerField);
 		answerField.setColumns(10);
 		
@@ -204,7 +200,7 @@ public class AddingTestMenu {
 				});
 			}
 		});
-		btnSubmit.setBounds(335, 548, 89, 23);
+		btnSubmit.setBounds(335, 568, 89, 23);
 		panel.add(btnSubmit);
 	}
 }
