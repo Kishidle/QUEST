@@ -142,11 +142,17 @@ public class ResultMenu {
 					
 					if (achievements.next()) {
 						String query = "UPDATE users " +
-								   "SET U_Pts = U_Pts + " + pts + " " +
-							       "WHERE U_Num = " + user.getUserNumber() + " ";
+									   "SET U_Pts = U_Pts + " + (pts/5) + " " +
+							           "WHERE U_Num = " + user.getUserNumber() + " ";
 
 						ResultSet rs = stmt.executeQuery(query);
-						user.setAchievements(user.getAchievements() + 1);
+						
+						query = "INSERT INTO usertests (U_Num, T_Num, UT_Num) " +
+								"VALUES ('" + user.getUsername() + "', '" + test.getNumber() + "', '1')" +
+							    "ON DUPLICATE KEY UPDATE UT_Num = UT_Num + 1"; 
+						
+						rs = stmt.executeQuery(query);
+						
 						user.setPoints((int) (user.getPoints() + Math.floor(pts/5)));
 					} 
 					else {
@@ -156,9 +162,16 @@ public class ResultMenu {
 
 						ResultSet rs = stmt.executeQuery(query);
 						
-						query = "INSERT INTO userachievements " +
-						        "(U_Num, A_Num)" +
-								"VALUES (" + user.getUserNumber() + ", " + ach + ")";
+						query = "INSERT INTO userachievements (U_Num, A_Num)" +
+								"VALUES ('" + user.getUserNumber() + "', '" + ach + "')";
+						
+						rs = stmt.executeQuery(query);
+						
+						query = "INSERT INTO usertests (U_Num, T_Num, UT_Num) " +
+								"VALUES ('" + user.getUsername() + "', '" + test.getNumber() + "', '1')" +
+							    "ON DUPLICATE KEY UPDATE UT_Num = UT_Num + 1"; 
+						
+						rs = stmt.executeQuery(query);
 								
 						JOptionPane.showMessageDialog(null, "You have obtained an achievement!");
 						user.setAchievements(user.getAchievements() + 1);
