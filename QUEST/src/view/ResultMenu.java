@@ -131,7 +131,7 @@ public class ResultMenu {
 				try {
 					Class.forName("com.mysql.jdbc.Driver");	        
 
-					conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+					conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
 					stmt = (Statement) conn.createStatement();
 					
 					String testquery = "SELECT * " +
@@ -145,13 +145,13 @@ public class ResultMenu {
 									   "SET U_Pts = U_Pts + " + (pts/5) + " " +
 							           "WHERE U_Num = " + user.getUserNumber() + " ";
 
-						ResultSet rs = stmt.executeQuery(query);
+						stmt.executeUpdate(query);
 						
 						query = "INSERT INTO usertests (U_Num, T_Num, UT_Num) " +
-								"VALUES ('" + user.getUsername() + "', '" + test.getNumber() + "', '1')" +
+								"VALUES ('" + user.getUserNumber() + "', '" + test.getNumber() + "', '1')" +
 							    "ON DUPLICATE KEY UPDATE UT_Num = UT_Num + 1"; 
 						
-						rs = stmt.executeQuery(query);
+						stmt.executeUpdate(query);
 						
 						user.setPoints((int) (user.getPoints() + Math.floor(pts/5)));
 					} 
@@ -160,18 +160,18 @@ public class ResultMenu {
 								   "SET U_Pts = U_Pts + " + pts + " AND U_Ach = U_Ach + 1 " +
 							       "WHERE U_Num = " + user.getUserNumber() + " ";
 
-						ResultSet rs = stmt.executeQuery(query);
+						stmt.executeUpdate(query);
 						
 						query = "INSERT INTO userachievements (U_Num, A_Num)" +
 								"VALUES ('" + user.getUserNumber() + "', '" + ach + "')";
 						
-						rs = stmt.executeQuery(query);
+						stmt.executeUpdate(query);
 						
 						query = "INSERT INTO usertests (U_Num, T_Num, UT_Num) " +
-								"VALUES ('" + user.getUsername() + "', '" + test.getNumber() + "', '1')" +
+								"VALUES ('" + user.getUserNumber() + "', '" + test.getNumber() + "', '1')" +
 							    "ON DUPLICATE KEY UPDATE UT_Num = UT_Num + 1"; 
 						
-						rs = stmt.executeQuery(query);
+						stmt.executeUpdate(query);
 								
 						JOptionPane.showMessageDialog(null, "You have obtained an achievement!");
 						user.setAchievements(user.getAchievements() + 1);

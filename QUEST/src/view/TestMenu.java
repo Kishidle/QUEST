@@ -79,21 +79,19 @@ public class TestMenu {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
-				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
 				stmt = (Statement) conn.createStatement();
 
-				String query = "SELECT * FROM tests" +
-							   "WHERE A_Num !='0'" +
-						       "ORDER BY -LOG(RAND()) / (RAND()/(SELECT IFNULL(UT_Num, 1) FROM usertests " +
-						       						    "WHERE U_Num == '" + user.getUserNumber() + "')) ";
+				String query = "SELECT * FROM tests " +
+							   "WHERE A_Num !='0' " +
+						       "ORDER BY RAND() " +
+						       "LIMIT 1";
 				
 				ResultSet rs = stmt.executeQuery(query);
-
-				int num = rs.getInt("T_Num");
 				
 				if (rs.next()) {
 					int rows = rs.getInt(1);
-					num = rs.getInt("T_Num");
+					int num = rs.getInt("T_Num");
 					ttl = rs.getString("T_Ttl");
 					des = rs.getString("T_Msg");
 					cod = rs.getString("T_Cod");

@@ -128,13 +128,13 @@ public class Registration extends JFrame {
 							try {
 								Class.forName("com.mysql.jdbc.Driver");	        
 
-								conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+								conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
 								stmt = (Statement) conn.createStatement();
 
 								String query = "INSERT INTO users (U_Usn, U_Pas)" +
 											   "VALUES ('" + username + "', '" + password + "')";
 
-								ResultSet rs = stmt.executeQuery(query);
+								stmt.executeUpdate(query);
 								
 									//moving windows
 									Login frame = new Login();
