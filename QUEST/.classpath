@@ -3,7 +3,8 @@
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Amagi/Documents/git/QUEST/QUEST/resources/mysql-connector-java-5.1.41-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Amagi/Documents/git/QUEST/QUEST/resources/weblaf-complete-1.29.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ramon/Documents/GitHub/QUEST/QUEST/weblaf-complete-1.28.jar"/>
+	<classpathentry kind="lib" path="C:/mysql-connector-java-5.1.41/mysql-connector-java-5.1.41-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ramon/Documents/GitHub/QUEST/QUEST/quest_mainmenugui.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
