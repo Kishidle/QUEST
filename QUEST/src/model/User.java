@@ -17,6 +17,7 @@ public class User {
 	private String password;
 	private int achievements;
 	private int points;
+	private int type;
 	
 	/**
 	 * Creates a blank representation for <code>User</code> model.
@@ -27,17 +28,20 @@ public class User {
 
 	/**
 	 * Creates a representation that contains the information for <code>User</code> model.
+	 * @param usernumber User Usernumber
 	 * @param username User Username
 	 * @param password User Password
 	 * @param achievements User Achievements 
 	 * @param points User Points 
+	 * @param type User Type
 	 */
-	public User(int usernumber, String username, String password, int achievements, int points) {
+	public User(int usernumber, String username, String password, int achievements, int points, int type) {
 		this.usernumber = usernumber;
 		this.username = username;
 		this.password = password;
 		this.achievements = achievements;
 		this.points = points;
+		this.type = type;
 	}
 
 	public int getUserNumber() {
@@ -78,5 +82,13 @@ public class User {
 
 	public void setPoints(int points) {
 		this.points = points;
+	}
+	
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 }

@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -145,6 +146,7 @@ public class Login extends JFrame {
 									String p = rs.getString("U_Pas");
 									int ac = rs.getInt("U_Ach");
 									int pt = rs.getInt("U_Pts");
+									int tp = rs.getInt("U_Typ");
 
 									User set = new User();
 									set.setUserNumber(num);
@@ -152,11 +154,18 @@ public class Login extends JFrame {
 									set.setPassword(p);
 									set.setAchievements(ac);
 									set.setPoints(pt);
+									set.setType(tp);
 
 									//moving windows
-									MainMenu frame = new MainMenu(set);
-									frame.setVisible(true);
-									dispose();
+									if (tp == 0) {
+										MainMenu frame = new MainMenu(set);
+										frame.setVisible(true);
+										dispose();
+									}
+									else {
+										AddingTestMenu frame = new AddingTestMenu(set);
+										dispose();
+									}
 								} 
 								else {
 									JOptionPane.showMessageDialog(null, "Incorrect Username and/or Password!");
