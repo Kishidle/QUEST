@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import api.component.PCompiler;
 import model.User;
 
 import java.awt.Window.Type;
@@ -26,6 +27,8 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+
+import java.nio.file.Path;
 
 public class MainMenu extends JFrame {
 
@@ -126,6 +129,13 @@ public class MainMenu extends JFrame {
 		btnNewButton.setIcon(new ImageIcon(MainMenu.class.getResource("/compile-transparent-small.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try{
+					PCompiler cmp = new PCompiler();
+					cmp.compileRun();
+				}
+				catch(Exception x){
+					x.printStackTrace();
+				}
 			}
 		});
 		
