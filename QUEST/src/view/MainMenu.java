@@ -29,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MainMenu extends JFrame {
 
@@ -131,7 +132,8 @@ public class MainMenu extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					PCompiler cmp = new PCompiler();
-					cmp.compileRun();
+					Path filePath = Paths.get(JOptionPane.showInputDialog("Please input the source code location"));
+					cmp.compileRun(filePath);
 				}
 				catch(Exception x){
 					x.printStackTrace();
