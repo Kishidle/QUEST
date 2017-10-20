@@ -44,6 +44,7 @@ public class LeaderboardMenu {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public LeaderboardMenu(User user) {
 		initialize(user);
