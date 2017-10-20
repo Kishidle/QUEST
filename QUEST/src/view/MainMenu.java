@@ -147,13 +147,16 @@ public class MainMenu extends JFrame {
 		JLabel tipsLabel = new JLabel("");
 		tipsLabel.setIcon(new ImageIcon(MainMenu.class.getResource("/tip-transparent.png")));
 		
-		JLabel lblName = new JLabel("Name:");
+		String userName = user.getUsername();
+		JLabel lblName = new JLabel("Name: " + userName);
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
-		JLabel lblLevel = new JLabel("Level:");
+		String userLvl = Integer.toString(user.getPoints() / 100);
+		JLabel lblLevel = new JLabel("Level: " + userLvl);
 		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
-		JLabel lblPts = new JLabel("Pts:");
+		String userPts = Integer.toString(user.getPoints());
+		JLabel lblPts = new JLabel("Pts: " + userPts;);
 		lblPts.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
