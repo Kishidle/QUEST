@@ -135,8 +135,8 @@ public class MainMenu extends JFrame {
 					PCompiler cmp = new PCompiler();
 					Path filePath = Paths.get(JOptionPane.showInputDialog("Please input the source code location"));
 					String log = cmp.compileRun(filePath);
-					ErrorPolling ep = new ErrorPolling(log);
-					
+					//ErrorPolling ep = new ErrorPolling(log);
+					System.out.println(log);
 					
 				}
 				catch(Exception x){
