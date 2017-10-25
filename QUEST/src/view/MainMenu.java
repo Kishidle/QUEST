@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import api.component.PCompiler;
+import controller.ErrorPolling;
 import model.User;
 
 import java.awt.Window.Type;
@@ -133,7 +134,10 @@ public class MainMenu extends JFrame {
 				try{
 					PCompiler cmp = new PCompiler();
 					Path filePath = Paths.get(JOptionPane.showInputDialog("Please input the source code location"));
-					cmp.compileRun(filePath);
+					String log = cmp.compileRun(filePath);
+					ErrorPolling ep = new ErrorPolling(log);
+					
+					
 				}
 				catch(Exception x){
 					x.printStackTrace();
@@ -156,7 +160,7 @@ public class MainMenu extends JFrame {
 		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
 		String userPts = Integer.toString(user.getPoints());
-		JLabel lblPts = new JLabel("Pts: " + userPts;);
+		JLabel lblPts = new JLabel("Pts: " + userPts);
 		lblPts.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(

@@ -3,7 +3,7 @@ package controller;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ErrorPolling implements Runnable {
+public class ErrorPolling {
 
 	private static String ERROR = " ERROR  :";
 	private static String WARNING = " WARNING:";
@@ -80,11 +80,16 @@ public class ErrorPolling implements Runnable {
 		int index = 0;
 		int count = 0;
 		int length = perror.length();
-		while ((index = error.indexOf(perror, index)) != -1 ) {                
+		while ((index = error.indexOf(perror, index)) != -1) {                
 			index += length; 
 			count++;
 		}
 	}
+	
+	public ErrorPolling(String perror) {
+		run(perror);
+	}
+	
 	/**
 	 * This method converts the error messages created by <code>gcc</code> into the simplified error messages of PDE-C.
 	 * The conversion is based on the default regex patterns of PDE-C. If an error message not found in the regex patterns of PDE-C, that error message will be returned as an empty string.
@@ -303,9 +308,5 @@ public class ErrorPolling implements Runnable {
 		}
 		//System.out.println(errorDesc);
 		return "";
-	}
-
-	public void start(){
-
 	}
 }
