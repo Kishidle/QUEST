@@ -4,15 +4,21 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+
+import model.Badges;
+
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.GridBagLayout;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.sql.*;
 
 public class BadgesMenuAgain {
 
@@ -79,6 +85,36 @@ public class BadgesMenuAgain {
 		JPanel panel_1 = new JPanel();
 		scrollPane.setViewportView(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
+		
+		ArrayList<Badges> badgeList = new ArrayList<>();
+		JButton[] btnArr = new JButton[24];
+				
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "user", "");
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT A_num, A_Ttl, A_Msg, A_Bdg FROM achievements where A_Num != 0 AND A_Bdg != 0");
+			while(rs.next()){
+				Badges bdg = new Badges();
+				bdg.setBadgeNum(rs.getInt("A_num"));
+				bdg.setBadgeTitle(rs.getString("A_Ttl"));
+				bdg.setBadgeDisc(rs.getString("A_Msg"));
+				bdg.setBadgeType(rs.getInt("A_bdg"));
+				//bdg.setBadgeIcon("no badge image");
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i = 0; i < btnArr.length; i++){
+			btnArr[i] = new JButton(badgeList.get(i).getBadgeTitle());
+			panel_1.add(btnArr[i]);
+		}
+		
 		
 		JButton btnNewButton = new JButton("New button");
 		panel_1.add(btnNewButton);
