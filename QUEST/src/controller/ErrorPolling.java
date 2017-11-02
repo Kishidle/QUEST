@@ -103,10 +103,108 @@ public class ErrorPolling {
 		
 		int[] errorTyp = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 0, 20, 0, 21};
 		
-		for(int i = 0; i < errorArr.length; i++){
-			if(perror.contains(errorArr[i])){
+		int[] questNum = {0, 0, 0, 0, 0};
+		int[] questTyp = {0, 0, 0, 0, 0};
+		boolean[] questClr = {false, false, false, false, false};
+		
+		/** 
+		 * gets data from the db regarding the state of quests the current program has
+		 * for checking if a quest is completed
+		 */
+		
+		try {
+			Connection conn = null;
+			Statement stmt = null;
+
+			try {
+				Class.forName("com.mysql.jdbc.Driver");	        
+
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
+				stmt = (Statement) conn.createStatement();
+
+				String check = "SELECT UQ_Num, Q_Num FROM userquests " +
+							   "WHERE U_Num = " + user.getUserNumber() + " AND UQ_Pth = " + filePath + " AND UQ_Clr == 0";
+			
+				ResultSet res = stmt.executeQuery(check);
 				
-				//finds first error description in the errorArray, generates quest
+				int counter = 0;
+				
+				if (res.next()) {
+					int rows = res.getInt(1);
+					questNum[counter] = res.getInt("UQ_Num");
+					questTyp[counter] = res.getInt("Q_Num");
+					counter++;
+				}	
+			} 
+			catch(Exception a) {
+				System.out.println(a.getMessage());	    	
+				JOptionPane.showMessageDialog(null, "A database error occured.");
+			}	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		/**
+		 * finds if the error log has the corresponding quest's errors still, if it does
+		 * then the quest is not marked as completed. if it doesn't, then the quest is
+		 * marked as completed. after this the completion is reflected on the database.
+		 */
+		
+		for(int i = 0; i < errorArr.length; i++){
+			if(perror.contains(errorArr[i]) && errorTyp[i] != 0){
+				//do nothing
+			}
+			else if (errorTyp[i] != 0) {
+				//proceed to check if this error is present in any of the quests
+				int j = 0;
+				while (questTyp[j] != 0) {
+					if (questTyp[j] == errorTyp[i]) {
+						questClr[j] = true;
+						try {
+							Connection conn = null;
+							Statement stmt = null;
+
+							try {
+								Class.forName("com.mysql.jdbc.Driver");	        
+
+								conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
+								stmt = (Statement) conn.createStatement();
+
+								String solve = "UPDATE userquests" +
+											   "SET U_Clr = 1" +
+											   "WHERE U_Num = " + user.getUserNumber() + " AND UQ_Pth = " + filePath + " AND UQ_Num = " + questNum[j];
+							
+								stmt.executeQuery(solve);
+								
+								String userup = "UPDATE users " +
+										   	    "SET U_Pts = U_Pts + " + 20 + " " +
+								                "WHERE U_Num = " + user.getUserNumber() + " ";
+
+								stmt.executeUpdate(userup);
+
+							} 
+							catch(Exception a) {
+								System.out.println(a.getMessage());	    	
+								JOptionPane.showMessageDialog(null, "A database error occured.");
+							}	
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+					j++;
+				}
+			}
+		}
+		
+		/**
+		 * finds first error description in the errorArray, then proceeds to generate a quest 
+		 * based on it
+		 */
+		
+		for(int i = 0; i < errorArr.length; i++){
+			if(perror.contains(errorArr[i]) && errorTyp[i] != 0){
 				
 				try {
 					Connection conn = null;
@@ -122,6 +220,7 @@ public class ErrorPolling {
 						 * obtains the number of quests already generated for the user for a specific program
 						 * if it's equal to 5, no more quests are generated and the loop is broken
 						 */
+						
 						int rows = 0;
 						
 						String query = "SELECT count(U_Num) FROM userquests " +
@@ -137,32 +236,41 @@ public class ErrorPolling {
 							break;
 						}
 						
-						//if the amount of quests are less than 5, we generate one quest
+						/**
+						 * if the amount of quests are less than 5, we generate one quest, but first we access
+						 * the quest db for the corresponding error
+						 */
 						
-						query = "INSERT INTO userquests (U_Num, T_Num, UT_Num) " +
-								"VALUES ('" + user.getUserNumber() + "', '" + test.getNumber() + "', '1')" +
-							    "ON DUPLICATE KEY UPDATE UT_Num = UT_Num + 1";
+						query = "SELECT * FROM quests " +
+								"WHERE Q_Num = " + errorTyp[i] + " ";
+					
+						rs = stmt.executeQuery(query);
+						
+						int num = 0;
+						String ttl = "";
+						String msg = "";
+						int pts = 0;
+						int ach = 0;
+						
+						if (rs.next()) {
+							rows = rs.getInt(1);
+							num = rs.getInt("Q_Num");
+							ttl = rs.getString("Q_Ttl");
+							msg = rs.getString("Q_Msg");
+							pts = rs.getInt("Q_Pts");
+							ach = rs.getInt("A_Num");
+						}
+						
+						/**
+						 * after obtaining the corresponding quest, we generate the quest itself and insert
+						 * it into the db
+						 */
+						
+						query = "INSERT INTO userquests (UQ_Qnm, UQ_Pnm, UQ_Pts, UQ_Pth, Q_Num, U_Num) " +
+								"VALUES ('" + ttl + "', '" + msg + "', '" + pts + "', '" + filePath + "', '" + num + "', '" + user.getUserNumber() + "')";
 						
 						stmt.executeUpdate(query);
 						
-						if (rs.next()) {
-							int rows = rs.getInt(1);
-							int num = rs.getInt("T_Num");
-							ttl = rs.getString("T_Ttl");
-							des = rs.getString("T_Msg");
-							cod = rs.getString("T_Cod");
-							String ans = rs.getString("T_Ans");
-							String fan = rs.getString("T_Fan");
-							pts = rs.getInt("T_Pts");
-							String cor = rs.getString("T_Cor");
-							String inc = rs.getString("T_Inc");
-							nach = rs.getInt("A_Num");
-							
-							test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc, nach);
-						} 
-						else {
-							JOptionPane.showMessageDialog(null, "Nothing found!");
-						}
 					} 
 					catch(Exception a) {
 						System.out.println(a.getMessage());	    	
@@ -182,13 +290,4 @@ public class ErrorPolling {
 	public ErrorPolling(String perror, User user, String filePath) {
 		run(perror, user, filePath);
 	}
-	
-	
-	/**
-	 * This method converts the error messages created by <code>gcc</code> into the simplified error messages of PDE-C.
-	 * The conversion is based on the default regex patterns of PDE-C. If an error message not found in the regex patterns of PDE-C, that error message will be returned as an empty string.
-	 * 
-	 * @return The simplified error message.
-	 */
-	
 }
