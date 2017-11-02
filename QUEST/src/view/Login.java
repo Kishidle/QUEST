@@ -113,7 +113,7 @@ public class Login extends JFrame {
 		lLogin = new JLabel("QUEST - Login");
 		lLogin.setFont(new Font("Tahoma", Font.PLAIN, 24));
 
-		JButton btnConfirm = new JButton("Confirm");
+		JButton btnConfirm = new JButton("Login");
 
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
