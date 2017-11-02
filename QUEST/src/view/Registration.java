@@ -46,6 +46,7 @@ public class Registration extends JFrame {
 	private JTextField fNum;
 	private JLabel lLogin;
 	private JPasswordField fPassword;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -156,27 +157,45 @@ public class Registration extends JFrame {
 		});
 		
 		fPassword = new JPasswordField();
+		
+		btnNewButton = new JButton("Return");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Login login = new Login();
+					login.setVisible(true);
+					dispose();
+				} catch (FontFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(100, Short.MAX_VALUE)
+					.addGap(30)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(btnNewButton)
+							.addPreferredGap(ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+							.addComponent(btnConfirm))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lNum)
 								.addComponent(lPassword))
 							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(fPassword)
-								.addComponent(fNum)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(fPassword, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+								.addComponent(fNum, GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(17)
-							.addComponent(lLogin))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(55)
-							.addComponent(btnConfirm)))
+							.addComponent(lLogin)))
 					.addGap(73))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -193,7 +212,9 @@ public class Registration extends JFrame {
 						.addComponent(lPassword)
 						.addComponent(fPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(40)
-					.addComponent(btnConfirm)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton)
+						.addComponent(btnConfirm, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(35, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);

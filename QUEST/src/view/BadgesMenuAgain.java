@@ -12,14 +12,23 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.sql.*;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BadgesMenuAgain {
 
@@ -43,6 +52,7 @@ public class BadgesMenuAgain {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
 	public BadgesMenuAgain(User user) {
 		this.user = user;
@@ -54,20 +64,30 @@ public class BadgesMenuAgain {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 550, 363);
+		frame.setBounds(100, 100, 550, 402);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		JPanel panel = new JPanel();
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JButton btnNewButton = new JButton("Return");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainMenu mainFrame = new MainMenu(user);
+				mainFrame.setVisible(true);
+				frame.dispose();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
-						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+						.addComponent(btnNewButton))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -76,7 +96,9 @@ public class BadgesMenuAgain {
 					.addContainerGap()
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton)
 					.addContainerGap())
 		);
 		
@@ -103,7 +125,7 @@ public class BadgesMenuAgain {
 				bdg.setBadgeTitle(rs.getString("A_Ttl"));
 				bdg.setBadgeDisc(rs.getString("A_Msg"));
 				bdg.setBadgeType(rs.getInt("A_bdg"));
-				//bdg.setBadgeIcon("no badge image");
+				bdg.setBadgeIcon("res/no-badge.png");
 				badgeList.add(bdg);
 			}
 		} catch (ClassNotFoundException e) {
@@ -115,7 +137,9 @@ public class BadgesMenuAgain {
 		}
 		
 		for(int i = 0; i < btnArr.length; i++){
-			btnArr[i] = new JButton(badgeList.get(i).getBadgeTitle());
+			
+			btnArr[i] = new JButton(new ImageIcon(getClass().getResource("/img/no-badge.png")));
+			btnArr[i].setToolTipText(badgeList.get(i).getBadgeTitle() + ": " + badgeList.get(i).getBadgeDisc());
 			panel_1.add(btnArr[i]);
 		}
 		
