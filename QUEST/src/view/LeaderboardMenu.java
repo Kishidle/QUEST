@@ -99,7 +99,7 @@ public class LeaderboardMenu {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
-				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "password");	
 				stmt = (Statement) conn.createStatement();
 
 				String query = "SELECT * FROM users " +

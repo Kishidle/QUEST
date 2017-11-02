@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import model.Badges;
+import model.User;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -23,7 +24,7 @@ import java.sql.*;
 public class BadgesMenuAgain {
 
 	private JFrame frame;
-
+	private User user;
 	/**
 	 * Launch the application.
 	 */
@@ -31,8 +32,8 @@ public class BadgesMenuAgain {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BadgesMenuAgain window = new BadgesMenuAgain();
-					window.frame.setVisible(true);
+					//BadgesMenuAgain window = new BadgesMenuAgain();
+					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -43,7 +44,8 @@ public class BadgesMenuAgain {
 	/**
 	 * Create the application.
 	 */
-	public BadgesMenuAgain() {
+	public BadgesMenuAgain(User user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -54,7 +56,7 @@ public class BadgesMenuAgain {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 550, 363);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		frame.setVisible(true);
 		JPanel panel = new JPanel();
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -90,8 +92,9 @@ public class BadgesMenuAgain {
 		JButton[] btnArr = new JButton[24];
 				
 		try {
+			System.out.print("test");
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "user", "");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "password");
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT A_num, A_Ttl, A_Msg, A_Bdg FROM achievements where A_Num != 0 AND A_Bdg != 0");
 			while(rs.next()){
@@ -101,6 +104,7 @@ public class BadgesMenuAgain {
 				bdg.setBadgeDisc(rs.getString("A_Msg"));
 				bdg.setBadgeType(rs.getInt("A_bdg"));
 				//bdg.setBadgeIcon("no badge image");
+				badgeList.add(bdg);
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -115,42 +119,6 @@ public class BadgesMenuAgain {
 			panel_1.add(btnArr[i]);
 		}
 		
-		
-		JButton btnNewButton = new JButton("New button");
-		panel_1.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("New button");
-		panel_1.add(btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("New button");
-		panel_1.add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("New button");
-		panel_1.add(btnNewButton_3);
-		
-		JButton btnNewButton_4 = new JButton("New button");
-		panel_1.add(btnNewButton_4);
-		
-		JButton btnNewButton_5 = new JButton("New button");
-		panel_1.add(btnNewButton_5);
-		
-		JButton btnNewButton_11 = new JButton("New button");
-		panel_1.add(btnNewButton_11);
-		
-		JButton btnNewButton_10 = new JButton("New button");
-		panel_1.add(btnNewButton_10);
-		
-		JButton btnNewButton_9 = new JButton("New button");
-		panel_1.add(btnNewButton_9);
-		
-		JButton btnNewButton_8 = new JButton("New button");
-		panel_1.add(btnNewButton_8);
-		
-		JButton btnNewButton_7 = new JButton("New button");
-		panel_1.add(btnNewButton_7);
-		
-		JButton btnNewButton_6 = new JButton("New button");
-		panel_1.add(btnNewButton_6);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 }

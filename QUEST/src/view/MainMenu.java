@@ -118,8 +118,9 @@ public class MainMenu extends JFrame {
 		bBadge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					BadgeMenuTest badgeFrame = new BadgeMenuTest(user);
+					BadgesMenuAgain badgeFrame = new BadgesMenuAgain(user);
 					dispose();
+					
 				}
 				catch(Exception x){
 					x.printStackTrace();
