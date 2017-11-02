@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,7 @@ public class ErrorPolling {
 	private static final Pattern PATTERN_MISSING_TERMINATOR = Pattern.compile("(error: missing terminating)");
 	private static final Pattern PATTERN_MISSING_INT_MAIN = Pattern.compile("(warning: return type defaults to 'int')");
 	private static final Pattern PATTERN_MISSING_INCLUDE = Pattern.compile("(error: empty filename in #include)");
-	private static final Pattern PATTERN_MISSING_FILE = Pattern.compile("(No such file or directory)");
+	private static final Pattern PATTERN_MISSING_FILE2 = Pattern.compile("(No such file or directory)");
 
 	private static final Pattern PATTERN_INCOMPATIBLE_DECLARATION = Pattern.compile("(warning: incompatible implicit declaration of built-in function)");
 
@@ -80,15 +81,30 @@ public class ErrorPolling {
 		int index = 0;
 		int count = 0;
 		int length = perror.length();
-		while ((index = error.indexOf(perror, index)) != -1) {                
+		while ((index = ERROR.indexOf(perror, index)) != -1) {                
 			index += length; 
 			count++;
 		}
+		
+		String[] errorArr = {NOTE_UNDECLARED_IDENTIFIER, NOTE_PROVIDE_STDIOH, MISSING_SEMICOLON, MISSING_PARENTHESIS_L, MISSING_PARENTHESIS_R, MISSING_BRACE_L, MISSING_BRACE_R,
+				               MISSING_INITIALIZE, MISSING_EXPRESSION, MISSING_STATEMENT, MISSING_IF_FROM_ELSE, MISSING_TERMINATOR, MISSING_INT_MAIN, MISSING_INCLUDE, MISSING_FILE,
+				               INCOMPATIBLE_DECLARATION, UNKNOWN_TYPE, CHARACTER_TOO_LONG, UNDECLARED_VARIABLE, IMPLICIT_FUNCTION, STRAY_SLASH, FEW_PRINTF, LEFT_VALUE_NOT_ASSIGNABLE,
+				               INVALID_SUFFIX};
+		
+		for(int i = 0; i < errorArr.length; i++){
+			if(perror.contains(errorArr[i])){
+				
+				//finds first error description in the errorArray, does things
+				break;
+			}
+		}
 	}
+	
 	
 	public ErrorPolling(String perror) {
 		run(perror);
 	}
+	
 	
 	/**
 	 * This method converts the error messages created by <code>gcc</code> into the simplified error messages of PDE-C.
@@ -96,217 +112,5 @@ public class ErrorPolling {
 	 * 
 	 * @return The simplified error message.
 	 */
-	public String simplify(){
-		String errorDesc = "";
-		String line = error;
-		Matcher m = PATTERN_PATH.matcher(line);
-
-		if (m.find()) {
-
-			errorDesc = line;
-			line = line.substring(0, line.length()-m.group().length());
-
-			Matcher m2 = PATTERN_ERROR.matcher(errorDesc);
-			if (m2.find())
-			{
-				errorDesc = m2.group();
-				errorDesc = convert(new ErrorMessage("", errorDesc, m.group()));
-				//errorDesc = removeDuplicates(errorDesc);
-				//System.out.println(errorDesc);
-				return errorDesc;
-			}
-
-		}
-
-		m = PATTERN_PATH_MAIN.matcher(line);
-
-		if (m.find()) {
-			errorDesc = "";
-			//System.out.println(errorDesc);
-			return errorDesc;
-		}
-
-		return errorDesc;
-	}
-
-	/**
-	 * Explain the process here.
-	 * 
-	 * @param errorDesc The Error Message Object
-	 * @return The equivalent of the converted message.
-	 */
-	private String convert(ErrorMessage errorDesc) {
-		Matcher m;
-
-		m = PATTERN_NOTE_UNDECLARED_IDENTIFIER.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(NOTE);
-			errorDesc.setMessage(NOTE_UNDECLARED_IDENTIFIER);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_NOTE_PROVIDE_STDIOH.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(NOTE);
-			errorDesc.setMessage(NOTE_PROVIDE_STDIOH);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_UNDECLARED_VARIABLE.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(UNDECLARED_VARIABLE);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_SEMICOLON.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_SEMICOLON);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_PARENTHESIS_L.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_PARENTHESIS_L);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_PARENTHESIS_R.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_PARENTHESIS_R);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_BRACE_L.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_BRACE_L);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_BRACE_R.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_BRACE_R);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_INITIALIZE.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_INITIALIZE);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_EXPRESSION.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_EXPRESSION);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_STATEMENT.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_STATEMENT);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_IF_FROM_ELSE.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_IF_FROM_ELSE);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_TERMINATOR.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_TERMINATOR);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_INT_MAIN.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(WARNING);
-			errorDesc.setMessage(MISSING_INT_MAIN);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_INCLUDE.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_INCLUDE);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_MISSING_FILE.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(MISSING_FILE);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_INCOMPATIBLE_DECLARATION.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(WARNING);
-			errorDesc.setMessage(INCOMPATIBLE_DECLARATION);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_UNKNOWN_TYPE.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(UNKNOWN_TYPE);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_CHARACTER_TOO_LONG.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(WARNING);
-			errorDesc.setMessage(CHARACTER_TOO_LONG);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_FEW_PRINTF.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(FEW_PRINTF);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_LEFT_VALUE_NOT_ASSIGNABLE.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(LEFT_VALUE_NOT_ASSIGNABLE);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_INVALID_SUFFIX.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(INVALID_SUFFIX);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_IMPLICIT_FUNCTION.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(WARNING);
-			errorDesc.setMessage(IMPLICIT_FUNCTION);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		m = PATTERN_STRAY_SLASH.matcher(errorDesc.getMessage());
-		if (m.find()) {
-			errorDesc.setType(ERROR);
-			errorDesc.setMessage(STRAY_SLASH);
-			errorDesc.setLine(errorDesc.getLine());
-			return errorDesc.getErrorMessage();
-		}
-		//System.out.println(errorDesc);
-		return "";
-	}
+	
 }
