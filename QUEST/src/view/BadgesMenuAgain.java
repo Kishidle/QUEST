@@ -102,7 +102,7 @@ public class BadgesMenuAgain {
 					.addContainerGap())
 		);
 		
-		JLabel lblBadges = new JLabel("Badges");
+		JLabel lblBadges = new JLabel(new ImageIcon(getClass().getResource("/img/badgestitle.png")));
 		lblBadges.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		panel.add(lblBadges);
 		
