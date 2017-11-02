@@ -35,7 +35,8 @@ import java.nio.file.Paths;
 public class MainMenu extends JFrame {
 
 	private JPanel contentPane;
-
+	private String fp = "";
+	
 	/**
 	 * Launch the application.
 	 */
@@ -133,9 +134,10 @@ public class MainMenu extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					PCompiler cmp = new PCompiler();
-					Path filePath = Paths.get(JOptionPane.showInputDialog("Please input the source code location"));
+					fp = JOptionPane.showInputDialog("Please input the source code location");
+					Path filePath = Paths.get(fp);
 					String log = cmp.compileRun(filePath);
-					//ErrorPolling ep = new ErrorPolling(log);
+					ErrorPolling ep = new ErrorPolling(log, user, fp);
 					System.out.println(log);
 					
 				}

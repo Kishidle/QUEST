@@ -1,8 +1,18 @@
 package controller;
 
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+
+import model.Test;
+import model.User;
 
 public class ErrorPolling {
 
@@ -70,7 +80,7 @@ public class ErrorPolling {
 	private static final Pattern PATTERN_PATH = Pattern.compile("((?!.c:)[0-9]+(?=:\\d))"); //pattern for path
 	private static final Pattern PATTERN_ERROR = Pattern.compile("((error:)|(warning:)|(note:)) (.*)"); //pattern for error/note/warning
 
-	public void run(String perror) {
+	public void run(String perror, User user, String filePath) {
 		/**
 		 * Call API from PDE-C to compile the Program
 		 * located in PCompiler.java, under CompileRun
@@ -86,23 +96,91 @@ public class ErrorPolling {
 			count++;
 		}
 		
-		String[] errorArr = {NOTE_UNDECLARED_IDENTIFIER, NOTE_PROVIDE_STDIOH, MISSING_SEMICOLON, MISSING_PARENTHESIS_L, MISSING_PARENTHESIS_R, MISSING_BRACE_L, MISSING_BRACE_R,
+		String[] errorArr = { NOTE_UNDECLARED_IDENTIFIER, NOTE_PROVIDE_STDIOH, MISSING_SEMICOLON, MISSING_PARENTHESIS_L, MISSING_PARENTHESIS_R, MISSING_BRACE_L, MISSING_BRACE_R,
 				               MISSING_INITIALIZE, MISSING_EXPRESSION, MISSING_STATEMENT, MISSING_IF_FROM_ELSE, MISSING_TERMINATOR, MISSING_INT_MAIN, MISSING_INCLUDE, MISSING_FILE,
 				               INCOMPATIBLE_DECLARATION, UNKNOWN_TYPE, CHARACTER_TOO_LONG, UNDECLARED_VARIABLE, IMPLICIT_FUNCTION, STRAY_SLASH, FEW_PRINTF, LEFT_VALUE_NOT_ASSIGNABLE,
 				               INVALID_SUFFIX};
 		
+		int[] errorTyp = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0, 0, 20, 0, 21};
+		
 		for(int i = 0; i < errorArr.length; i++){
 			if(perror.contains(errorArr[i])){
 				
-				//finds first error description in the errorArray, does things
+				//finds first error description in the errorArray, generates quest
+				
+				try {
+					Connection conn = null;
+					Statement stmt = null;
+
+					try {
+						Class.forName("com.mysql.jdbc.Driver");	        
+
+						conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
+						stmt = (Statement) conn.createStatement();
+
+						/**
+						 * obtains the number of quests already generated for the user for a specific program
+						 * if it's equal to 5, no more quests are generated and the loop is broken
+						 */
+						int rows = 0;
+						
+						String query = "SELECT count(U_Num) FROM userquests " +
+									   "WHERE U_Num = " + user.getUserNumber() + " AND  UQ_Path = " + filePath + " ";
+						
+						ResultSet rs = stmt.executeQuery(query);
+						
+						if (rs.next()) {
+							rows = rs.getInt(1);
+						}
+						
+						if (rows >= 5) {
+							break;
+						}
+						
+						//if the amount of quests are less than 5, we generate one quest
+						
+						query = "INSERT INTO userquests (U_Num, T_Num, UT_Num) " +
+								"VALUES ('" + user.getUserNumber() + "', '" + test.getNumber() + "', '1')" +
+							    "ON DUPLICATE KEY UPDATE UT_Num = UT_Num + 1";
+						
+						stmt.executeUpdate(query);
+						
+						if (rs.next()) {
+							int rows = rs.getInt(1);
+							int num = rs.getInt("T_Num");
+							ttl = rs.getString("T_Ttl");
+							des = rs.getString("T_Msg");
+							cod = rs.getString("T_Cod");
+							String ans = rs.getString("T_Ans");
+							String fan = rs.getString("T_Fan");
+							pts = rs.getInt("T_Pts");
+							String cor = rs.getString("T_Cor");
+							String inc = rs.getString("T_Inc");
+							nach = rs.getInt("A_Num");
+							
+							test = new Test(num, ttl, des, cod, ans, fan, pts, cor, inc, nach);
+						} 
+						else {
+							JOptionPane.showMessageDialog(null, "Nothing found!");
+						}
+					} 
+					catch(Exception a) {
+						System.out.println(a.getMessage());	    	
+						JOptionPane.showMessageDialog(null, "A database error occured.");
+					}	
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				break;
 			}
 		}
 	}
 	
 	
-	public ErrorPolling(String perror) {
-		run(perror);
+	public ErrorPolling(String perror, User user, String filePath) {
+		run(perror, user, filePath);
 	}
 	
 	
