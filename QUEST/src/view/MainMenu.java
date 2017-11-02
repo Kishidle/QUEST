@@ -92,6 +92,16 @@ public class MainMenu extends JFrame {
 		bQuests.setIcon(new ImageIcon(MainMenu.class.getResource("/quest-transparent-small.png")));
 		bQuests.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					//moving windows
+					fp = JOptionPane.showInputDialog("Please input the source code location");
+					QuestMenu Qframe = new QuestMenu(user, fp);
+					//tframe.initialize(user);
+					dispose();
+				} 
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		bQuests.setFont(new Font("Tahoma", Font.PLAIN, 20));
