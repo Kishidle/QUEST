@@ -112,13 +112,15 @@ public class BadgesMenuAgain {
 		
 		ArrayList<Badges> badgeList = new ArrayList<>();
 		JButton[] btnArr = new JButton[24];
-				
+		Connection conn = null;
+		Statement stmt = null;
+		//getting the achievement/badge details from the database
 		try {
 			System.out.print("test");
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "password");
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT A_num, A_Ttl, A_Msg, A_Bdg FROM achievements where A_Num != 0 AND A_Bdg != 0");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "password");
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT A_num, A_Ttl, A_Msg, A_Bdg FROM achievements WHERE A_Num != 0 AND A_Bdg != 0");
 			while(rs.next()){
 				Badges bdg = new Badges();
 				bdg.setBadgeNum(rs.getInt("A_num"));
@@ -128,20 +130,66 @@ public class BadgesMenuAgain {
 				bdg.setBadgeIcon("res/no-badge.png");
 				badgeList.add(bdg);
 			}
+			
+			PreparedStatement st = conn.prepareStatement("SELECT A_Num FROM userachievements WHERE U_num = ?");
+			st.setObject(1, user.getUserNumber());
+			ResultSet rs2 = st.executeQuery();
+			
+			while(rs2.next()){
+				int achID = rs2.getInt("A_Num");
+				for(int i = 0; i < badgeList.size(); i++){
+					
+					if(achID == badgeList.get(i).getBadgeNum()){
+						badgeList.get(i).setAcquired(true);
+						break;
+					}
+				}
+				
+			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
+		
+		//getting the badges that the user has already acquired from the database
 		
 		for(int i = 0; i < btnArr.length; i++){
 			
+			if(badgeList.get(i).isAcquired()){
+				String urlString = "";
+				switch(badgeList.get(i).getBadgeType()){
+				case 1: urlString = "/img/bronze-sm.png"; break;
+				case 2: urlString = "/img/silver-sm.png"; break;
+				case 3: urlString = "/img/gold-sm.png"; break;
+				}
+				btnArr[i] = new JButton(new ImageIcon(getClass().getResource(urlString)));
+			}
+			else{
 			btnArr[i] = new JButton(new ImageIcon(getClass().getResource("/img/no-badge.png")));
+			}
 			btnArr[i].setToolTipText(badgeList.get(i).getBadgeTitle() + ": " + badgeList.get(i).getBadgeDisc());
 			panel_1.add(btnArr[i]);
 		}
+		
+		
+		
 		
 		frame.getContentPane().setLayout(groupLayout);
 	}

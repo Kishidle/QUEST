@@ -10,6 +10,8 @@ public class Badges {
 	private int badgeType;
 	private String badgeIcon = "";
 	private JButton badgeBtn;
+	private boolean isAcquired = false;
+	
 	public int getBadgeNum() {
 		return badgeNum;
 	}
@@ -45,6 +47,12 @@ public class Badges {
 	}
 	public void setBadgeBtn(JButton badgeBtn) {
 		this.badgeBtn = badgeBtn;
+	}
+	public boolean isAcquired() {
+		return isAcquired;
+	}
+	public void setAcquired(boolean isAcquired) {
+		this.isAcquired = isAcquired;
 	}
 
 }
