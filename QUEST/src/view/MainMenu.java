@@ -23,6 +23,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -95,9 +96,14 @@ public class MainMenu extends JFrame {
 				try {
 					//moving windows
 					fp = JOptionPane.showInputDialog("Please input the source code location");
-					QuestMenu Qframe = new QuestMenu(user, fp);
-					//tframe.initialize(user);
-					dispose();
+					if ((fp == null) || (fp.length() < 0) || !(new File(fp).exists())) {
+						JOptionPane.showMessageDialog(null, "The source code does not exist!");
+					}
+					else {
+						QuestMenu Qframe = new QuestMenu(user, fp);
+						//tframe.initialize(user);
+						dispose();
+					}
 				} 
 				catch (Exception e) {
 					e.printStackTrace();
@@ -146,10 +152,15 @@ public class MainMenu extends JFrame {
 				try{
 					PCompiler cmp = new PCompiler();
 					fp = JOptionPane.showInputDialog("Please input the source code location");
-					Path filePath = Paths.get(fp);
-					String log = cmp.compileRun(filePath);
-					ErrorPolling ep = new ErrorPolling(log, user, fp);
-					System.out.println(log);
+					if ((fp == null) || (fp.length() < 0) || !(new File(fp).exists())) {
+						JOptionPane.showMessageDialog(null, "The source code does not exist!");
+					}
+					else {
+						Path filePath = Paths.get(fp);
+						String log = cmp.compileRun(filePath);
+						ErrorPolling ep = new ErrorPolling(log, user, fp);
+						//System.out.println(log);
+					}
 					
 				}
 				catch(Exception x){
@@ -162,15 +173,15 @@ public class MainMenu extends JFrame {
 		titleLabel.setIcon(new ImageIcon(MainMenu.class.getResource("/title-transparent-small.png")));
 		
 		String userName = user.getUsername();
-		JLabel lblName = new JLabel("Name: " + userName);
+		JLabel lblName = new JLabel("Name: " + user.getUsername());
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
 		String userLvl = Integer.toString(user.getPoints() / 100);
-		JLabel lblLevel = new JLabel("Level: " + userLvl);
+		JLabel lblLevel = new JLabel("Level: " + (user.getPoints() / 100) + 1);
 		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		
 		String userPts = Integer.toString(user.getPoints());
-		JLabel lblPts = new JLabel("Pts: " + userPts);
+		JLabel lblPts = new JLabel("Pts: " + user.getPoints()%100 + " / 100");
 		lblPts.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(

@@ -100,7 +100,7 @@ public class LeaderboardMenu {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
-				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "user", "");	
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
 				stmt = (Statement) conn.createStatement();
 
 				String query = "SELECT * FROM users " +
@@ -138,7 +138,7 @@ public class LeaderboardMenu {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
-				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "user", "");	
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
 				stmt = (Statement) conn.createStatement();
 				
 				String query;
