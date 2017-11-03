@@ -47,6 +47,7 @@ public class Login extends JFrame {
 	private JTextField fNum;
 	private JLabel lLogin;
 	private JPasswordField fPassword;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -113,7 +114,7 @@ public class Login extends JFrame {
 		lLogin = new JLabel("QUEST - Login");
 		lLogin.setFont(new Font("Tahoma", Font.PLAIN, 24));
 
-		JButton btnConfirm = new JButton("Confirm");
+		JButton btnConfirm = new JButton("Login");
 
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,7 +132,7 @@ public class Login extends JFrame {
 							try {
 								Class.forName("com.mysql.jdbc.Driver");	        
 
-								conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3307/quest", "root", "");	
+								conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "user", "");	
 								stmt = (Statement) conn.createStatement();
 
 								String query = "SELECT * FROM users " +
@@ -186,35 +187,50 @@ public class Login extends JFrame {
 		});
 		
 		fPassword = new JPasswordField();
+		
+		btnNewButton = new JButton("Register");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Registration register = new Registration();
+					register.setVisible(true);
+					dispose();
+				} catch (FontFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap(100, Short.MAX_VALUE)
+					.addContainerGap(78, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lLogin)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lNum)
-								.addComponent(lPassword))
+								.addComponent(lPassword)
+								.addComponent(btnNewButton, Alignment.TRAILING))
 							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(fPassword)
-								.addComponent(fNum)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(17)
-							.addComponent(lLogin))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(55)
-							.addComponent(btnConfirm)))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(fPassword)
+									.addComponent(fNum))
+								.addComponent(btnConfirm))))
 					.addGap(73))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(22)
+					.addGap(38)
 					.addComponent(lLogin)
-					.addGap(34)
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lNum)
 						.addComponent(fNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -222,9 +238,11 @@ public class Login extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lPassword)
 						.addComponent(fPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(40)
-					.addComponent(btnConfirm)
-					.addContainerGap(35, Short.MAX_VALUE))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton)
+						.addComponent(btnConfirm))
+					.addContainerGap(57, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

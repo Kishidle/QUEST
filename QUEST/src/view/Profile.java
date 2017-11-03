@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -51,7 +52,7 @@ public class Profile extends JFrame {
 
 	public void initialize(User user) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 399, 261);
+		setBounds(100, 100, 399, 361);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -61,11 +62,11 @@ public class Profile extends JFrame {
 		lblTest.setOpaque(true);
 		lblTest.setForeground(Color.BLACK);
 		lblTest.setBackground(Color.WHITE);
-		lblTest.setBounds(10, 22, 114, 99);
+		lblTest.setBounds(10, 110, 114, 99);
 		contentPane.add(lblTest);
 
 		JLabel lblUsername = new JLabel("Username: " + user.getUsername());
-		lblUsername.setBounds(153, 22, 200, 14);
+		lblUsername.setBounds(153, 120, 200, 14);
 		contentPane.add(lblUsername);
 
 		//		JTextPane userNameTextPane = new JTextPane();
@@ -73,7 +74,7 @@ public class Profile extends JFrame {
 		//		contentPane.add(userNameTextPane);
 
 		JLabel lblBadgesCollected = new JLabel("Badges Collected: " + user.getAchievements());
-		lblBadgesCollected.setBounds(153, 47, 200, 14);
+		lblBadgesCollected.setBounds(153, 145, 200, 14);
 		contentPane.add(lblBadgesCollected);
 
 		//		JTextPane badgesCollectedTextPane = new JTextPane();
@@ -81,7 +82,7 @@ public class Profile extends JFrame {
 		//		contentPane.add(badgesCollectedTextPane);
 
 		JLabel levelLabel = new JLabel("Level: " + (user.getPoints()/100));
-		levelLabel.setBounds(153, 72, 200, 14);
+		levelLabel.setBounds(153, 170, 200, 14);
 		contentPane.add(levelLabel);
 
 		//		JLabel levelNumberLabel = new JLabel("");
@@ -89,7 +90,7 @@ public class Profile extends JFrame {
 		//		contentPane.add(levelNumberLabel);
 
 		JLabel lblExpTillNext = new JLabel("EXP till next level: " + (user.getPoints()%100));
-		lblExpTillNext.setBounds(153, 97, 200, 14);
+		lblExpTillNext.setBounds(153, 195, 200, 14);
 		contentPane.add(lblExpTillNext);
 
 		//		JTextPane textPane = new JTextPane();
@@ -115,8 +116,12 @@ public class Profile extends JFrame {
 			}
 		});
 
-		btnBack.setBounds(284, 188, 89, 23);
+		btnBack.setBounds(284, 288, 89, 23);
 		contentPane.add(btnBack);
+		
+		JLabel label = new JLabel(new ImageIcon(getClass().getResource("/img/profiletitle.png")));
+		label.setBounds(10, 43, 46, 14);
+		contentPane.add(label);
 
 	}
 }

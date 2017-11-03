@@ -6,24 +6,34 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import model.Badges;
+import model.User;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.sql.*;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class BadgesMenuAgain {
 
 	private JFrame frame;
-
+	private User user;
 	/**
 	 * Launch the application.
 	 */
@@ -31,8 +41,8 @@ public class BadgesMenuAgain {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BadgesMenuAgain window = new BadgesMenuAgain();
-					window.frame.setVisible(true);
+					//BadgesMenuAgain window = new BadgesMenuAgain();
+					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,8 +52,10 @@ public class BadgesMenuAgain {
 
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
-	public BadgesMenuAgain() {
+	public BadgesMenuAgain(User user) {
+		this.user = user;
 		initialize();
 	}
 
@@ -52,20 +64,30 @@ public class BadgesMenuAgain {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 550, 363);
+		frame.setBounds(100, 100, 550, 402);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		frame.setVisible(true);
 		JPanel panel = new JPanel();
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JButton btnNewButton = new JButton("Return");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainMenu mainFrame = new MainMenu(user);
+				mainFrame.setVisible(true);
+				frame.dispose();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
-						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
+						.addComponent(btnNewButton))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -74,11 +96,13 @@ public class BadgesMenuAgain {
 					.addContainerGap()
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnNewButton)
 					.addContainerGap())
 		);
 		
-		JLabel lblBadges = new JLabel("Badges");
+		JLabel lblBadges = new JLabel(new ImageIcon(getClass().getResource("/img/badgestitle.png")));
 		lblBadges.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		panel.add(lblBadges);
 		
@@ -88,19 +112,39 @@ public class BadgesMenuAgain {
 		
 		ArrayList<Badges> badgeList = new ArrayList<>();
 		JButton[] btnArr = new JButton[24];
-				
+		Connection conn = null;
+		Statement stmt = null;
+		//getting the achievement/badge details from the database
 		try {
+			System.out.print("test");
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "user", "");
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT A_num, A_Ttl, A_Msg, A_Bdg FROM achievements where A_Num != 0 AND A_Bdg != 0");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "password");
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT A_num, A_Ttl, A_Msg, A_Bdg FROM achievements WHERE A_Num != 0 AND A_Bdg != 0");
 			while(rs.next()){
 				Badges bdg = new Badges();
 				bdg.setBadgeNum(rs.getInt("A_num"));
 				bdg.setBadgeTitle(rs.getString("A_Ttl"));
 				bdg.setBadgeDisc(rs.getString("A_Msg"));
 				bdg.setBadgeType(rs.getInt("A_bdg"));
-				//bdg.setBadgeIcon("no badge image");
+				bdg.setBadgeIcon("res/no-badge.png");
+				badgeList.add(bdg);
+			}
+			
+			PreparedStatement st = conn.prepareStatement("SELECT A_Num FROM userachievements WHERE U_num = ?");
+			st.setObject(1, user.getUserNumber());
+			ResultSet rs2 = st.executeQuery();
+			
+			while(rs2.next()){
+				int achID = rs2.getInt("A_Num");
+				for(int i = 0; i < badgeList.size(); i++){
+					
+					if(achID == badgeList.get(i).getBadgeNum()){
+						badgeList.get(i).setAcquired(true);
+						break;
+					}
+				}
+				
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -108,49 +152,45 @@ public class BadgesMenuAgain {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
+		
+		//getting the badges that the user has already acquired from the database
+		
 		for(int i = 0; i < btnArr.length; i++){
-			btnArr[i] = new JButton(badgeList.get(i).getBadgeTitle());
+			
+			if(badgeList.get(i).isAcquired()){
+				String urlString = "";
+				switch(badgeList.get(i).getBadgeType()){
+				case 1: urlString = "/img/bronze-sm.png"; break;
+				case 2: urlString = "/img/silver-sm.png"; break;
+				case 3: urlString = "/img/gold-sm.png"; break;
+				}
+				btnArr[i] = new JButton(new ImageIcon(getClass().getResource(urlString)));
+			}
+			else{
+			btnArr[i] = new JButton(new ImageIcon(getClass().getResource("/img/no-badge.png")));
+			}
+			btnArr[i].setToolTipText(badgeList.get(i).getBadgeTitle() + ": " + badgeList.get(i).getBadgeDisc());
 			panel_1.add(btnArr[i]);
 		}
 		
 		
-		JButton btnNewButton = new JButton("New button");
-		panel_1.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		panel_1.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("New button");
-		panel_1.add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("New button");
-		panel_1.add(btnNewButton_3);
-		
-		JButton btnNewButton_4 = new JButton("New button");
-		panel_1.add(btnNewButton_4);
-		
-		JButton btnNewButton_5 = new JButton("New button");
-		panel_1.add(btnNewButton_5);
-		
-		JButton btnNewButton_11 = new JButton("New button");
-		panel_1.add(btnNewButton_11);
-		
-		JButton btnNewButton_10 = new JButton("New button");
-		panel_1.add(btnNewButton_10);
-		
-		JButton btnNewButton_9 = new JButton("New button");
-		panel_1.add(btnNewButton_9);
-		
-		JButton btnNewButton_8 = new JButton("New button");
-		panel_1.add(btnNewButton_8);
-		
-		JButton btnNewButton_7 = new JButton("New button");
-		panel_1.add(btnNewButton_7);
-		
-		JButton btnNewButton_6 = new JButton("New button");
-		panel_1.add(btnNewButton_6);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 }

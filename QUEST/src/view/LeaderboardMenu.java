@@ -19,6 +19,7 @@ import com.mysql.jdbc.Statement;
 
 import model.User;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class LeaderboardMenu {
@@ -64,8 +65,8 @@ public class LeaderboardMenu {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel lblLeaderboards = new JLabel("Leaderboards");
-		lblLeaderboards.setBounds(184, 15, 78, 14);
+		JLabel lblLeaderboards = new JLabel(new ImageIcon(getClass().getResource("/img/leaderboardstitle.png")));
+		lblLeaderboards.setBounds(30, 15, 394, 35);
 		panel.add(lblLeaderboards);
 		
 		table = new JTable();
@@ -90,8 +91,8 @@ public class LeaderboardMenu {
 		});
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(1).setResizable(false);
-		table.setBounds(10, 36, 414, 80);
-		
+		table.setBounds(10, 61, 414, 100);
+		table.setRowHeight(20);
 		try {
 			Connection conn = null;
 			Statement stmt = null;
@@ -99,7 +100,7 @@ public class LeaderboardMenu {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
-				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "user", "");	
 				stmt = (Statement) conn.createStatement();
 
 				String query = "SELECT * FROM users " +
@@ -137,7 +138,7 @@ public class LeaderboardMenu {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");	        
 
-				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "root", "");	
+				conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/quest", "user", "");	
 				stmt = (Statement) conn.createStatement();
 				
 				String query;

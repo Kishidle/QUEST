@@ -128,8 +128,9 @@ public class MainMenu extends JFrame {
 		bBadge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
-					BadgeMenuTest badgeFrame = new BadgeMenuTest(user);
+					BadgesMenuAgain badgeFrame = new BadgesMenuAgain(user);
 					dispose();
+					
 				}
 				catch(Exception x){
 					x.printStackTrace();
@@ -160,9 +161,6 @@ public class MainMenu extends JFrame {
 		JLabel titleLabel = new JLabel("");
 		titleLabel.setIcon(new ImageIcon(MainMenu.class.getResource("/title-transparent-small.png")));
 		
-		JLabel tipsLabel = new JLabel("");
-		tipsLabel.setIcon(new ImageIcon(MainMenu.class.getResource("/tip-transparent.png")));
-		
 		String userName = user.getUsername();
 		JLabel lblName = new JLabel("Name: " + userName);
 		lblName.setFont(new Font("Tahoma", Font.PLAIN, 26));
@@ -176,63 +174,56 @@ public class MainMenu extends JFrame {
 		lblPts.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(titleLabel)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblName)
 								.addComponent(lblLevel)
-								.addComponent(lblPts))
-							.addPreferredGap(ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
-							.addComponent(bQuests))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addGap(406)
-							.addComponent(bRandomTest, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addGap(406)
-							.addComponent(bBadge, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addGap(406)
-							.addComponent(bLeaderboards, GroupLayout.PREFERRED_SIZE, 242, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addGap(406)
-							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(lblPts)))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(tipsLabel)))
-					.addContainerGap())
+							.addGap(218)
+							.addComponent(titleLabel))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(41)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(bQuests, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(bBadge, GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(bLeaderboards, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(bRandomTest, GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)))
+					.addGap(18))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(203)
+					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+					.addGap(209))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
+					.addGap(10)
 					.addComponent(titleLabel)
+					.addGap(18)
+					.addComponent(lblName)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblLevel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblPts)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(bQuests, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(bRandomTest, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(bBadge, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(bLeaderboards, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-							.addGap(34))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(18)
-							.addComponent(lblName)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblLevel)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblPts)
-							.addGap(413)))
-					.addComponent(tipsLabel)
-					.addGap(20))
+						.addComponent(bRandomTest, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+						.addComponent(bQuests, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(bLeaderboards, GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+						.addComponent(bBadge, GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+					.addGap(37))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
